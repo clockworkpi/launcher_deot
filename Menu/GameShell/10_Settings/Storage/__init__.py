@@ -67,7 +67,7 @@ class StoragePage(Page):
 
         usage_percent = (self._DskUsg[0]/self._DskUsg[1] )*100.0
         
-        self._BGlabel.Init("%d%%"% int(usage_percent),MySkinManager.GiveFont("varela25"))
+        self._BGlabel.Init("%d%%"% int(usage_percent),MySkinManager.GiveFont("varela21"))
         self._BGlabel.SetColor( self._HighColor )
         
         self._FreeLabel = Label()
