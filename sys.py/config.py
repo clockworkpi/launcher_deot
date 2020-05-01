@@ -13,7 +13,7 @@ Battery   = "/sys/class/power_supply/axp20x-battery/uevent"
 
 MPD_socket = "/tmp/mpd.socket"
 
-UPDATE_URL="https://raw.githubusercontent.com/clockworkpi/launcher_deot/master/CPI/version.json"
+UPDATE_URL="https://raw.githubusercontent.com/clockworkpi/CPI_DEOT/master/version.json"
 
 VERSION="stable 1.25"
 

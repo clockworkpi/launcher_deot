@@ -106,7 +106,7 @@ class StoragePage(Page):
         rect2.left = rect_.left
         rect2.top  = rect_.top
         
-        aa_round_rect(self._CanvasHWND,rect2, MySkinManager.GiveColor('Front'),5,0,MySkinManager.GiveColor('Front'))        
+        aa_round_rect(self._CanvasHWND,rect2, MySkinManager.GiveColor('High'),5,0,MySkinManager.GiveColor('High'))        
         
 class APIOBJ(object):
 

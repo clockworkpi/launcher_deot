@@ -82,9 +82,9 @@ class AirplanePage(Page):
         DialogBoxs._ImgSurf = MyIconPool.GiveIconSurface("DialogBoxs")
         DialogBoxs._MyType = ICON_TYPES["STAT"]
         DialogBoxs._Parent = self
-        DialogBoxs._IconWidth = 134
-        DialogBoxs._IconHeight = 93
-        DialogBoxs.Adjust(0,0,134,372,0)
+        DialogBoxs._IconWidth = 180
+        DialogBoxs._IconHeight = 80
+        DialogBoxs.Adjust(0,0,180,320,0)
         self._Icons["DialogBoxs"] = DialogBoxs
 
         

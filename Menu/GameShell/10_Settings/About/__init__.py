@@ -275,7 +275,8 @@ class AboutPage(Page):
             if self._Screen._CanvasHWND != None and self._CanvasHWND == None:
                 self._HWND = self._Screen._CanvasHWND
                 self._CanvasHWND = pygame.Surface( (self._Screen._Width,self._BGheight+50) )
-
+                self._CanvasHWND_Wallpaper = pygame.Surface( (self._Screen._Width,self._Screen._Height) )
+        
         self._PosX = self._Index*self._Screen._Width 
         self._Width = self._Screen._Width ## equal to screen width
         self._Height = self._Screen._Height
@@ -345,14 +346,19 @@ class AboutPage(Page):
         
                                 
     def Draw(self):
-
+        
         if self._DrawOnce == False:
-            self.ClearCanvas()
+            if self._Wallpaper:
+                self._CanvasHWND.fill((0,0,0,)) 
+                self._CanvasHWND.set_colorkey((0,0,0))
+            else:
+                self._CanvasHWND.fill(MySkinManager.GiveColor("White"))
+            
             #self._Ps.Draw()
         
             for i in self._MyList:
                 i.Draw()
-                
+               
             self._DrawOnce = True
             
             self._Icons["bg"].DrawRect((230,0,82,184),(228,0,82,184))
@@ -364,8 +370,13 @@ class AboutPage(Page):
         if self._HWND != None:
             self._HWND.fill(MySkinManager.GiveColor("White"))
             
-            self._HWND.blit(self._CanvasHWND,(self._PosX,self._PosY,self._Width, self._Height ) )
-            
+            if self._Wallpaper:
+                self._CanvasHWND_Wallpaper.blit(self._Wallpaper,(0,0))
+                self._CanvasHWND_Wallpaper.blit(self._CanvasHWND,(self._PosX,self._PosY,self._Width, self._Height )) 
+                self._HWND.blit(self._CanvasHWND_Wallpaper,(0,0,self._Width, self._Height ) )
+            else:
+                self._HWND.blit(self._CanvasHWND,(self._PosX,self._PosY,self._Width, self._Height )) 
+                
             self._Scroller.UpdateSize(self._BGheight,abs(self._Scrolled)*3)
             self._Scroller.Draw()
         
