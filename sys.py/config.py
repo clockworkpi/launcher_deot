@@ -60,7 +60,8 @@ def PreparationInAdv():
         btnlayout = btnlayout.strip()
         ButtonsLayout = btnlayout
         if ButtonsLayout != "xbox" and ButtonsLayout != "snes":
-            ButtonsLayout = "xbox"
+            #ButtonsLayout = "xbox"
+            ButtonsLayout = "snes"
         
     if FileExists(".powerlevel") == False:
         os.system("touch .powerlevel")
