@@ -26,8 +26,8 @@ class Textarea(Widget):
         pass
     
     def Init(self):
-        self._FontObj = MyLangManager.TrFont("veramono24")
-        #pygame.font.Font(fonts_path["veramono"],24)
+        self._FontObj = MyLangManager.TrFont("Eurostile15")
+        #pygame.font.Font(fonts_path["Eurostile"],20)
 
     def SubTextIndex(self):
 
