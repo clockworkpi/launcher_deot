@@ -24,6 +24,8 @@ class SkinManager(object):
     _Colors = {}
     _Config = None
     _Fonts = {}
+    
+    #backup skin
     DefaultSkin = "../skin/default"
 
     def __init__(self):
@@ -47,33 +49,17 @@ class SkinManager(object):
         skinpath = config.SKIN+"/truetype"
         fonts_path = {}
         fonts_path["varela"]   = "%s/VarelaRound-Regular.ttf" % skinpath
-        print(fonts_path["varela"])
         fonts_path["veramono"] = "%s/VeraMono.ttf" % skinpath
         fonts_path["noto"]     = "%s/NotoSansMono-Regular.ttf" % skinpath
         fonts_path["notocjk"]     = "%s/NotoSansCJK-Regular.ttf" % skinpath
      	fonts_path["Eurostile"] = "%s/EurostileMN-Medium.pfb.ttf" %skinpath
+        print(fonts_path["Eurostile"])
         fonts_path["EurostileBold"] = "%s/EurostileMN-ExtendedBold.pfb.ttf" % skinpath
         
-        
-        self._Fonts["EurostileBold13"]  = pygame.font.Font(fonts_path["EurostileBold"],13)        
-        self._Fonts["EurostileBold30"]  = pygame.font.Font(fonts_path["EurostileBold"],30)
-        
-        for i in range(10,29):
-          self._Fonts["varela%d"%i] = pygame.font.Font(fonts_path["Eurostile"],i)
-          
-        self._Fonts["varela34"] = pygame.font.Font(fonts_path["Eurostile"],34)
-        self._Fonts["varela40"] = pygame.font.Font(fonts_path["Eurostile"],40)
-        self._Fonts["varela120"] = pygame.font.Font(fonts_path["Eurostile"],120)
-        
-
         for i in range(10,29):
           self._Fonts["varela%d"%i] = pygame.font.Font(fonts_path["varela"],i)
-          
-        self._Fonts["varela34"] = pygame.font.Font(fonts_path["varela"],34)
-        self._Fonts["varela40"] = pygame.font.Font(fonts_path["varela"],40)
-        self._Fonts["varela120"] = pygame.font.Font(fonts_path["varela"],120)
         
-        for i in range(10,26):
+	for i in range(10,26):
             self._Fonts["veramono%d"%i] = pygame.font.Font(fonts_path["veramono"],i)
         
         for i in range(10,28):
@@ -81,6 +67,23 @@ class SkinManager(object):
 
         for i in range(10,28):
             self._Fonts["notosanscjk%d"%i] = pygame.font.Font(fonts_path["notocjk"],i)
+
+	for i in range(10,29):
+            self._Fonts["Eurostile%d"%i] = pygame.font.Font(fonts_path["Eurostile"],i)
+	
+	self._Fonts["Eurostile11"] = pygame.font.Font(fonts_path["Eurostile"],11)		
+        self._Fonts["Eurostile12"] = pygame.font.Font(fonts_path["Eurostile"],12)
+        self._Fonts["Eurostile15"] = pygame.font.Font(fonts_path["Eurostile"],15)
+	self._Fonts["Eurostile34"] = pygame.font.Font(fonts_path["Eurostile"],34)
+        self._Fonts["Eurostile40"] = pygame.font.Font(fonts_path["Eurostile"],40)
+        self._Fonts["Eurostile120"] = pygame.font.Font(fonts_path["Eurostile"],120)
+
+	for i in range(10,30):
+	    self._Fonts["EurostileBold%d"%i] = pygame.font.Font(fonts_path["EurostileBold"],i)
+
+	self._Fonts["EurostileBold13"]  = pygame.font.Font(fonts_path["EurostileBold"],13)        
+        self._Fonts["EurostileBold30"]  = pygame.font.Font(fonts_path["EurostileBold"],30)
+
     
         self._Fonts["arial"] = pygame.font.SysFont("arial",16)
         
@@ -94,8 +97,9 @@ class SkinManager(object):
         Colors["Line"] = pygame.Color(169, 169, 169)
         Colors["TitleBg"] = pygame.Color(228, 228, 228)
         Colors["Active"] = pygame.Color(175, 90, 0)
-        Colors["Disabled"] = pygame.Color(204, 204, 204)
-        Colors["White"] = pygame.Color(255, 255, 255)
+        Colors["Inactive"] = pygame.Color(120, 160, 140)
+	Colors["Disabled"] = pygame.Color(204, 204, 204)        
+	Colors["White"] = pygame.Color(255, 255, 255)
         Colors["Black"] = pygame.Color(0, 0, 0)
 
         SkinManager._Colors = Colors
@@ -152,7 +156,7 @@ class SkinManager(object):
             
     def GiveWallpaper(self,png_name):
         #first SKIN/wallpapers/xxxx.png
-        #second ../skin/default/wallpapers/xxxx.png
+        #second ../skin/DEOT/wallpapers/xxxx.png
         #finnal gameshell/wallpaper/xxxx.png
         #loading.png,seeyou.png,updating.png,gameover.png,desktopbg.png
         wlp = "/wallpaper/"
@@ -175,5 +179,3 @@ def InitMySkinManager():
     
 
 InitMySkinManager()
-
-
