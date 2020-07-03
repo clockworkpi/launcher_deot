@@ -52,7 +52,7 @@ class ConfirmPage(Page):
     _Selector=None
     _FootMsg = ["Nav","","","Cancel","Yes"]
     _MyList = []
-    _ListFont = MyLangManager.TrFont("veramono20")
+    _ListFont = MyLangManager.TrFont("Eurostile20")
     _MyStack = None
     _FileName     = ""
     _TrashDir     = ""
