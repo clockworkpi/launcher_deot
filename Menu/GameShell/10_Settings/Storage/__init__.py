@@ -13,8 +13,6 @@ from UI.icon_pool import MyIconPool
 from UI.label  import Label
 from UI.util_funcs import midRect
 
-from libs.roundrects import aa_round_rect
-
 class StoragePage(Page):
 
     _Icons = {}
@@ -24,10 +22,10 @@ class StoragePage(Page):
     _BGlabel  = None
     _FreeLabel = None
     
-    _BGmsg    = "%.1fGB of %.1fGB Used"
+    _GBmsg    = "%.1fGB of %.1fGB Used"
     _DskUsg   = None
 
-    _HighColor = MySkinManager.GiveColor('High')
+    _TextColor = MySkinManager.GiveColor('Text')
     _FootMsg    = ["Nav.","","","Back",""]
     
     def __init__(self):
@@ -53,27 +51,24 @@ class StoragePage(Page):
         self._Width =  self._Screen._Width
         self._Height = self._Screen._Height
         
-        self._BGpng = IconItem()
-        self._BGpng._ImgSurf = MyIconPool.GiveIconSurface("icon_sd")
-        self._BGpng._MyType = ICON_TYPES["STAT"]
-        self._BGpng._Parent = self
+        self._GBLabel = Label()
+        self._GBLabel.SetCanvasHWND(self._CanvasHWND)
+        self._GBLabel.Init(self._GBmsg % (self._DskUsg[1]-self._DskUsg[0], self._DskUsg[1]),MySkinManager.GiveFont("varela11") )
+        self._GBLabel.SetColor(self._TextColor)
         
-        self._BGpng.AddLabel(self._BGmsg % (self._DskUsg[1]-self._DskUsg[0], self._DskUsg[1]), MySkinManager.GiveFont("varela15"))
-        self._BGpng.Adjust(0,0,self._BGwidth,self._BGheight,0)
-
-        
-        self._BGlabel = Label()
-        self._BGlabel.SetCanvasHWND(self._CanvasHWND)
+        self._PctLabel = Label()
+        self._PctLabel.SetCanvasHWND(self._CanvasHWND)
 
         usage_percent = (self._DskUsg[0]/self._DskUsg[1] )*100.0
         
-        self._BGlabel.Init("%d%%"% int(usage_percent),MySkinManager.GiveFont("varela21"))
-        self._BGlabel.SetColor( self._HighColor )
+        
+        self._PctLabel.Init("%d%%"% int(usage_percent),MySkinManager.GiveFont("EurostileBold30"))
+        self._PctLabel.SetColor( self._TextColor )
         
         self._FreeLabel = Label()
         self._FreeLabel.SetCanvasHWND(self._CanvasHWND)
-        self._FreeLabel.Init("Free",MySkinManager.GiveFont("varela13"))
-        self._FreeLabel.SetColor(self._BGlabel._Color)
+        self._FreeLabel.Init("FREE",MySkinManager.GiveFont("varela12"))
+        self._FreeLabel.SetColor(self._PctLabel._Color)
 
         
     def OnLoadCb(self):
@@ -82,31 +77,43 @@ class StoragePage(Page):
     def Draw(self):
         self.ClearCanvas()
         
-        self._BGpng.NewCoord(self._Width/2,self._Height/2-10)
-        self._BGpng.Draw()
-        self._BGlabel.NewCoord(self._Width/2-28,self._Height/2-30)
-        self._BGlabel.Draw()
+        self._PctLabel.NewCoord(32,102- 33)
+        self._PctLabel.Draw()
 
-        self._FreeLabel.NewCoord(self._BGlabel._PosX+10   ,self._Height/2)
+        self._FreeLabel.NewCoord(33   ,130-25)
         self._FreeLabel.Draw()
 
+        self._GBLabel.NewCoord(145,103-29)
+        self._GBLabel.Draw()
+        
         #bgcolor = (238,238,238), fgcolor = (126,206,244)
-        #aa_round_rect
+
         usage_percent = (self._DskUsg[0]/self._DskUsg[1] )
         if usage_percent < 0.1:
             usage_percent = 0.1
 
-        rect_ = midRect(self._Width/2,self._Height-30,170,17, Width,Height)
+        rect_ = pygame.Rect(144,118-25, 283-144,139-117)
 
-        aa_round_rect(self._CanvasHWND, rect_, MySkinManager.GiveColor('Line'), 5, 0, MySkinManager.GiveColor('Line'))
+        pygame.draw.rect(self._CanvasHWND,MySkinManager.GiveColor('Text'), rect_, 1)
 
         
-        rect2 = midRect(self._Width/2,self._Height-30,int(170*(1.0-usage_percent)),17, Width,Height)
+        rect2 = pygame.Rect(144,118-25,int((283-144)*(1.0-usage_percent)),139-117)
 
         rect2.left = rect_.left
         rect2.top  = rect_.top
         
-        aa_round_rect(self._CanvasHWND,rect2, MySkinManager.GiveColor('High'),5,0,MySkinManager.GiveColor('High'))        
+        pygame.draw.rect(self._CanvasHWND,MySkinManager.GiveColor('Text'),rect2, 0)   
+        
+        sep_rect = pygame.Rect(129,99-25,2,42)
+        
+        pygame.draw.rect(self._CanvasHWND,MySkinManager.GiveColor('Text'),sep_rect, 0)   
+        
+        ##4 cross
+        self.DrawCross(10,10)
+        self.DrawCross(self._Screen._Width-20,10)
+        self.DrawCross(10,self._Screen._Height-20)
+        self.DrawCross(self._Screen._Width-20,self._Screen._Height-20)
+        
         
 class APIOBJ(object):
 
@@ -134,5 +141,3 @@ def Init(main_screen):
     OBJ.Init(main_screen)
 def API(main_screen):
     OBJ.API(main_screen)
-    
-        
