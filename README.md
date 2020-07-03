@@ -1,4 +1,4 @@
-# GameShell launcher
+# GameShell DEOT launcher
 This is the DEOT UI launcher for GameShell based on 320x240 resolution and D-Pad layout.
 ![Screenshot](https://raw.githubusercontent.com/hi80482/launcher_deot/master/.screenshot.png)
 
@@ -136,7 +136,7 @@ decoder {
 }
 ```
 
-# Create “.mpd.conf” config
+# Create “.gameshell_skin” config
 
 vim ~/.gameshell_skin
 
