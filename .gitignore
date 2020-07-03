@@ -23,3 +23,5 @@ screenshots/*
 sys.py/.*
 sys.py/*.db
 launcher.sublime-workspace
+.screenshot.png
+version.json
