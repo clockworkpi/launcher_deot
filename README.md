@@ -16,28 +16,39 @@ sudo adduser cpi cpifav
 ```
 
 # Clone the GitHub repository
-* login as: cpi
-
+* Login as: cpi
+* Get launcher (System Apps)
 ```
 cd
 git clone https://github.com/your_launcher.git ~/launcher
+```
+
+* Get Menu (Custom Apps)
+```
+cd
+git clone https://github.com/your_menu.git ~/apps/Menu
 ```
 
 # Directory structure
 ```
 /home/cpi/
 ├── apps
-│   └── emulators
+│   ├── Menu <-Custom Apps
+│   ├── emulators
+│   └── ...
+│
 ├── launcher <-Here we are
-│   ├── Menu
+│   ├── Menu <-System apps
 │   ├── sys.py
 │   ├── skin
 │   └── ...
+│
 ├── games
 │   ├── FreeDM
 │   ├── MAME
 │   ├── nxengine
 │   └── ...
+│
 └── music
 ```
 ## Create the necessary directories
