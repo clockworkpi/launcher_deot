@@ -323,8 +323,16 @@ class TitleBar(Widget):
         self.ClearCanvas()
         title = MyLangManager.Tr(title)
         self._Title = title
+	
+	# get battery percentage, but not for music spectrum(GameShell RTA)
+        RTA_title = "GameShell RTA"
+        bat_pct = ""
+        if title != RTA_title and title != MyLangManager.Tr(RTA_title):
+            out = commands.getstatusoutput("upower -i /org/freedesktop/UPower/devices/battery_axp20x_battery | grep percentage | tail -c 5")
+            bat_pct = "".join(out[1]).strip() + "  "
         
         cur_time =  datetime.now().strftime("%H:%M")
+	cur_time = bat_pct + cur_time
         time_text_font = MySkinManager.GiveFont("Eurostile12")
         time_text_size = time_text_font.size(cur_time)
         title_text_size = MyLangManager.TrFont("Eurostile16").size(title)
