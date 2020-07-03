@@ -53,7 +53,7 @@ class FootBar(Widget):
     _Icons      = {}
     _IconWidth   = 18
     _IconHeight  = 18
-    _LabelFont   = MyLangManager.TrFont("veramono10")
+    _LabelFont   = MyLangManager.TrFont("Eurostile10")
     _State       = "normal"
 
     _SkinManager = None
