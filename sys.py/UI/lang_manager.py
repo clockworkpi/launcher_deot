@@ -31,15 +31,16 @@ class LangManager(object):
         self.SetLangs()
     
     def IsCJKMode(self):## in MultiLabel, latins seped by white spaces,CJK no needs for that
-        latins = ["English"]
-        self._CJKMode = True
+        # latins = ["English"]
+        # self._CJKMode = True
         
-        for i in latins:
-            if i in self._ConfigFileName:
-                self._CJKMode= False
-                break
+        # for i in latins:
+            # if i in self._ConfigFileName:
+                # self._CJKMode= False
+                # break
         
-        return self._CJKMode
+        # return self._CJKMode
+        return False
         
     def SetLangs(self):
         self._Config = CaseConfigParser()
