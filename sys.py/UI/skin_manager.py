@@ -53,7 +53,7 @@ class SkinManager(object):
         fonts_path["noto"]     = "%s/NotoSansMono-Regular.ttf" % skinpath
         fonts_path["notocjk"]     = "%s/NotoSansCJK-Regular.ttf" % skinpath
      	fonts_path["Eurostile"] = "%s/EurostileMN-Medium.pfb.ttf" %skinpath
-        print(fonts_path["Eurostile"])
+        #print(fonts_path["Eurostile"])
         fonts_path["EurostileBold"] = "%s/EurostileMN-ExtendedBold.pfb.ttf" % skinpath
         
         for i in range(10,29):
