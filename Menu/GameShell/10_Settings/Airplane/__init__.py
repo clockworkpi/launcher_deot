@@ -19,7 +19,7 @@ from UI.icon_pool  import MyIconPool
 from UI.icon_item  import IconItem
 from UI.multi_icon_item import MultiIconItem
 from UI.lang_manager import MyLangManager
-
+from UI.skin_manager import MySkinManager
 from UI.multilabel import MultiLabel
 
 class AirplanePage(Page):
@@ -63,23 +63,24 @@ class AirplanePage(Page):
         self._Height = self._Screen._Height
 
 
-
+        """
         airwire = IconItem()
-        airwire._ImgSurf = MyIconPool.GiveIconSurface("airwire")
+        airwire._ImgSurf = MyIconPool._Icons["airwire"]
         airwire._MyType = ICON_TYPES["STAT"]
         airwire._Parent = self
         airwire.Adjust(0,0,5,43,0)
         self._Icons["airwire"] = airwire
 
         GS = IconItem()
-        GS._ImgSurf = MyIconPool.GiveIconSurface("GS")
+        GS._ImgSurf = MyIconPool._Icons["GS"]
         GS._MyType = ICON_TYPES["STAT"]
         GS._Parent = self
         GS.Adjust(0,0,72,95,0)
         self._Icons["GS"] = GS
+        """
 
         DialogBoxs = MultiIconItem()
-        DialogBoxs._ImgSurf = MyIconPool.GiveIconSurface("DialogBoxs")
+        DialogBoxs._ImgSurf = MyIconPool._Icons["DialogBoxs"]
         DialogBoxs._MyType = ICON_TYPES["STAT"]
         DialogBoxs._Parent = self
         DialogBoxs._IconWidth = 180
@@ -90,7 +91,7 @@ class AirplanePage(Page):
         
         """
         bgpng = MultiIconItem()
-        bgpng._ImgSurf = MyIconPool.GiveIconSurface("about_bg")
+        bgpng._ImgSurf = MyIconPool._Icons["about_bg"]
         bgpng._MyType = ICON_TYPES["STAT"]
         bgpng._Parent = self
         bgpng.Adjust(0,0,self._BGwidth,self._BGheight,0)
@@ -231,19 +232,24 @@ class AirplanePage(Page):
     def Draw(self):
         self.ClearCanvas()
 
-        self._Icons["DialogBoxs"].NewCoord(145,23)        
-        self._Icons["airwire"].NewCoord(80,self._airwire_y)
+        self._Icons["DialogBoxs"].NewCoord(70,58)        
+        #self._Icons["airwire"].NewCoord(80,self._airwire_y)
         
         self._Icons["DialogBoxs"]._IconIndex = self._dialog_index
         
         self._Icons["DialogBoxs"].DrawTopLeft()
-        self._Icons["airwire"].Draw()
+        #self._Icons["airwire"].Draw()
 
-        self._Icons["GS"].NewCoord(98,118)
-        self._Icons["GS"].Draw()
+        #self._Icons["GS"].NewCoord(98,118)
+        #self._Icons["GS"].Draw()
+
+        self.DrawCross(10,10)
+        self.DrawCross(self._Screen._Width-20,10)
+        self.DrawCross(10,self._Screen._Height-20)
+        self.DrawCross(self._Screen._Width-20,self._Screen._Height-20)
         
         if self._HWND != None:
-            self._HWND.fill((255,255,255))
+            self._HWND.fill(MySkinManager.GiveColor("White"))
             
             self._HWND.blit(self._CanvasHWND,(self._PosX,self._PosY,self._Width, self._Height ) )
             
@@ -275,5 +281,3 @@ def Init(main_screen):
     OBJ.Init(main_screen)
 def API(main_screen):
     OBJ.API(main_screen)
-    
-        
