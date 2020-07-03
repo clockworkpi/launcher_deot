@@ -45,7 +45,7 @@ def PreparationInAdv():
     if SKIN != None:
         return
 
-    SKIN= "../skin/default"
+    SKIN= "../skin/DEOT"
     
     if FileExists("%s/.gameshell_skin" % os.path.expanduser('~')) == True:
         with open("%s/.gameshell_skin" % os.path.expanduser('~'),"r") as f:
