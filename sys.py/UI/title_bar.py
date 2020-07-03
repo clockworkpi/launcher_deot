@@ -316,7 +316,6 @@ class TitleBar(Widget):
         """
         aa_round_rect(self._CanvasHWND,  
                       (0,0,self._Width,self._Height),self._BgColor,8,0, self._BgColor)
-
         pygame.draw.rect(self._CanvasHWND,self._BgColor,(0,self._Height/2,Width,self._BarHeight), 0 )
         """
         
@@ -326,11 +325,11 @@ class TitleBar(Widget):
         self._Title = title
         
         cur_time =  datetime.now().strftime("%H:%M")
-        time_text_font = MySkinManager.GiveFont("varela12")
+        time_text_font = MySkinManager.GiveFont("Eurostile12")
         time_text_size = time_text_font.size(cur_time)
-        title_text_size = MyLangManager.TrFont("varela16").size(title)
+        title_text_size = MyLangManager.TrFont("Eurostile16").size(title)
 
-        self._CanvasHWND.blit(MyLangManager.TrFont("varela16").render(title,True,self._SkinManager.GiveColor("Text")),midRect(title_text_size[0]/2+self._LOffset,
+        self._CanvasHWND.blit(MyLangManager.TrFont("Eurostile16").render(title,True,self._SkinManager.GiveColor("Text")),midRect(title_text_size[0]/2+self._LOffset,
                                                                     title_text_size[1]/2+(self._BarHeight-title_text_size[1])/2,
                                                                     title_text_size[0],title_text_size[1],Width,Height))
         self._CanvasHWND.blit( time_text_font.render(cur_time,True,self._SkinManager.GiveColor("Text")),midRect(Width-time_text_size[0]/2-self._ROffset,
