@@ -14,7 +14,16 @@ import config
 class PowerOffConfirmPage(ConfirmPage):
     
     _ConfirmText = MyLangManager.Tr("Awaiting Input")
-    _FootMsg = ["Nav","Suspend","Reboot","Cancel","Shutdown"]
+    #_FootMsg = ["Nav","Suspend","Reboot","Cancel","Shutdown"]
+    _FootMsg = ["Nav","","Reboot","Cancel","Shutdown"]
+    
+    # uname -r
+    st = subprocess.check_output(["uname","-r"])
+    st = st.strip("\n")
+    st = st.strip("\t")
+
+    if "5.7" in st:
+        _FootMsg[1] = "Sleep"
 
     def CheckBattery(self):
         try:
@@ -68,10 +77,11 @@ class PowerOffConfirmPage(ConfirmPage):
             pygame.event.post( pygame.event.Event(RUNSYS, message=cmdpath))
 
         if event.key == CurKeys["Y"]:
-            cmdpath = "feh --bg-center %s;" % MySkinManager.GiveWallpaper("seeyou.png")
-            cmdpath += "sleep 3;"
-            cmdpath += "sudo pm-suspend"
-            pygame.event.post( pygame.event.Event(RUNSYS, message=cmdpath))
+            if self._FootMsg[1] != "":
+                cmdpath = "feh --bg-center %s;" % MySkinManager.GiveWallpaper("seeyou.png")
+                cmdpath += "sleep 3;"
+                cmdpath += "sudo pm-suspend"
+                pygame.event.post( pygame.event.Event(RUNSYS, message=cmdpath))
 
 class APIOBJ(object):
 
