@@ -235,7 +235,7 @@ class PlayListPage(Page):
                         self._MyList[i]._PosY += self._Scrolled * self._MyList[i]._Height
             
     def Click(self):
-        self.RefreshPsIndex()
+        #self.RefreshPsIndex()
         if len(self._MyList) == 0:
             return
         
@@ -325,4 +325,3 @@ class PlayListPage(Page):
                         continue
                     
                     i.Draw()
-                
