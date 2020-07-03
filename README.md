@@ -15,7 +15,7 @@ sudo groupadd cpifav -g 31415
 sudo adduser cpi cpifav  
 ```
 
-# Cloning the Git repository
+# Clone the GitHub repository
 * login as: cpi
 
 ```
