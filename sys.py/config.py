@@ -15,8 +15,7 @@ FB_Modes  = "/sys/class/graphics/fb0/modes"
 MPD_socket = "/tmp/mpd.socket"
 
 #UPDATE_URL="https://raw.githubusercontent.com/clockworkpi/CPI_DEOT/master/version.json"
-# disable update
-UPDATE_URL=""
+UPDATE_URL="https://raw.githubusercontent.com/hi80482/launcher_deot/master/version.json"
 
 VERSION="D.E.O.T. v2+ 200626"
 
