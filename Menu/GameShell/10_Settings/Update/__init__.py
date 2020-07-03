@@ -253,7 +253,11 @@ class UpdatePage(Page):
                             self._Screen.PushPage(self._ConfirmPage)
                             
                             self._Screen.Draw()
-                            self._ConfirmPage.SnapMsg(MyLangManager.Tr("UpdateToFQ") % json_["gitversion"] )
+                            
+                            if "version" in json_:
+                                self._ConfirmPage.SnapMsg(MyLangManager.Tr("ConfirmUpdateToFQ") % json_["version"] )
+                            else:
+                                self._ConfirmPage.SnapMsg(MyLangManager.Tr("UpdateToFQ") % json_["gitversion"] )
                             self._Screen.SwapAndShow()
                         else:
                             self._Screen.Draw()
@@ -330,5 +334,3 @@ def Init(main_screen):
     OBJ.Init(main_screen)
 def API(main_screen):
     OBJ.API(main_screen)
-    
-        
