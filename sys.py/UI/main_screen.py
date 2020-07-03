@@ -138,8 +138,8 @@ class MainScreen(Widget):
     _TitleBar    = None
     _FootBar     = None
     _MsgBox      = None
-    _MsgBoxFont  = MyLangManager.TrFont("veramono20")
-    _IconFont    = MyLangManager.TrFont("varela15")
+    _MsgBoxFont  = MyLangManager.TrFont("Eurostile20")
+    _IconFont    = MyLangManager.TrFont("Eurostile12")
     _SkinManager = None
 
     _Closed      = False
@@ -661,4 +661,3 @@ class MainScreen(Widget):
             if hasattr(self._CurrentPage,"_FootMsg"):
                 self._FootBar.SetLabelTexts(self._CurrentPage._FootMsg)
                 self._FootBar.Draw()
-
