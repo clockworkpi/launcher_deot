@@ -163,22 +163,22 @@ class MPDSpectrumPage(Page):
 
         self._song_title = Label()
         self._song_title.SetCanvasHWND(self._RollCanvas)
-        self._song_title.Init("Untitled",self._SongFont,MySkinManager.GiveColor('White'))
+        self._song_title.Init("Untitled",self._SongFont,MySkinManager.GiveColor('Text'))
 
 
         self._title = Label()
         self._title.SetCanvasHWND(self._CanvasHWND)
-        self._title.Init("Title:",self._ListFont,MySkinManager.GiveColor('White'))
+        self._title.Init("Title:",self._ListFont,MySkinManager.GiveColor('Text'))
 
         self._time = Label()
         self._time.SetCanvasHWND(self._CanvasHWND)
-        self._time.Init("Time:",self._ListFont,MySkinManager.GiveColor('White'))        
+        self._time.Init("Time:",self._ListFont,MySkinManager.GiveColor('Text'))        
 
 
         self._time2 = Label()
         self._time2.SetCanvasHWND(self._CanvasHWND)
         self._time2.Init("00:00-00:00", self._ListFont,
-                         MySkinManager.GiveColor('White'))
+                         MySkinManager.GiveColor('Text'))
 
         
         self.Start()
@@ -410,11 +410,8 @@ class MPDSpectrumPage(Page):
                 else:
                     self._capYPositionArray[i] = value
 
-                pygame.draw.rect(self._CanvasHWND,MySkinManager.GiveColor('White'),(i*(bw+gap)+margin_left,self._Height-gap-self._capYPositionArray[i]-margin_bottom,bw,gap),0)
+                pygame.draw.rect(self._CanvasHWND,MySkinManager.GiveColor('Text'),(i*(bw+gap)+margin_left,self._Height-gap-self._capYPositionArray[i]-margin_bottom,bw,gap),0)
                 
-                pygame.draw.rect(self._CanvasHWND,MySkinManager.GiveColor('White'),(i*(bw+gap)+margin_left,self._Height-value-gap-margin_bottom,bw,value+gap),0)
+                pygame.draw.rect(self._CanvasHWND,MySkinManager.GiveColor('Text'),(i*(bw+gap)+margin_left,self._Height-value-gap-margin_bottom,bw,value+gap),0)
                 
-                self._vis_values[i] -= 2       
-
-
-    
+                self._vis_values[i] -= 2
