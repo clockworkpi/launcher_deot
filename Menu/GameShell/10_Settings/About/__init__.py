@@ -79,7 +79,8 @@ class InfoPageListItem(object):
 class AboutPage(Page):
     _FootMsg =  ["Nav.","","","Back",""]
     _MyList = []
-    _ListFontObj = MyLangManager.TrFont("Eurostile13")
+    #_ListFontObj = MyLangManager.TrFont("Eurostile13")
+    _ListFontObj = MySkinManager.GiveFont("Eurostile13")
 
     _AList = {}
 
