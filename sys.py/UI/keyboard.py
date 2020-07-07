@@ -107,7 +107,7 @@ class Keyboard(Page):
         self._Width = self._Screen._Width
         self._Height = self._Screen._Height
         
-        fontobj = MySkinManager.GiveFont("veramono24")
+        fontobj = MySkinManager.GiveFont("varela24")
         word_margin = 15
 
         start_x = (self._Width - fontobj.size( "".join(self._Secs[0][0]))[0]-len(self._Secs[0][0])*word_margin)/2+word_margin/2
@@ -140,7 +140,7 @@ class Keyboard(Page):
                     else:
                         if val == "_S":
                             val = "Space"
-                            ti._FontObj = MySkinManager.GiveFont("veramono15")
+                            ti._FontObj = MySkinManager.GiveFont("Eurostile15")
                             ti._Bold = True
                         
                         cur_alpha_size  = ti._FontObj.size( val)

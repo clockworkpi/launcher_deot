@@ -15,10 +15,10 @@ import config
 
 class CounterScreen(FullScreen):
 
-    _CounterFont = MyLangManager.TrFont("varela120")
-    _TextFont1    = MyLangManager.TrFont("varela15")
-    _TextFont2    = MyLangManager.TrFont("varela12")
-    
+    _CounterFont = MyLangManager.TrFont("Eurostile120")
+    _TextFont1    = MyLangManager.TrFont("Eurostile15")
+    _TextFont2    = MyLangManager.TrFont("Eurostile12")
+
     _TopLabel = None
     _BottomLabel = None
     _NumberLabel = None

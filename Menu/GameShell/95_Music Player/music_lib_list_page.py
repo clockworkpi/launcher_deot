@@ -325,4 +325,4 @@ class MusicLibListPage(Page):
                     if i._PosY < 0:
                         continue
                         
-                    i.Draw()    
+                    i.Draw()

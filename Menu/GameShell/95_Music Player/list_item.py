@@ -127,7 +127,7 @@ class ListItem(object):
             
             if self._PlayingProcess > 0:
                 seek_posx = int(self._Width * self._PlayingProcess/100.0)
-                pygame.draw.line(self._Parent._CanvasHWND,MySkinManager.GiveColor('Active'),(self._PosX,self._PosY+self._Height-2),(self._PosX+seek_posx,self._PosY+self._Height-2),2)   
+                pygame.draw.line(self._Parent._CanvasHWND,MySkinManager.GiveColor('Text'),(self._PosX,self._PosY+self._Height-2),(self._PosX+seek_posx,self._PosY+self._Height-2),2)
 
         else:
             self._Labels["Text"].Draw()

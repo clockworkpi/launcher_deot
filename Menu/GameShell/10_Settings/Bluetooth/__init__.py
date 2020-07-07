@@ -253,9 +253,9 @@ class BleInfoPage(Page):
         if self._AList != None:
             if "Connected" in self._AList:
                 if self._AList["Connected"] == 1:
-                    self._FootMsg[1] = "Disconnect"
+                    self._FootMsg[2] = "Disconnect"
                 else:
-                    self._FootMsg[1] = ""
+                    self._FootMsg[2] = ""
         
         self.GenList()
 
@@ -425,7 +425,7 @@ class BluetoothPage(Page):
         
         msgbox = BleListMessageBox()
         msgbox._CanvasHWND = self._CanvasHWND
-        msgbox.Init(" ",MyLangManager.TrFont("veramono12"))
+        msgbox.Init(" ",MyLangManager.TrFont("veramono15"))
         msgbox._Parent = self
         
         self._MsgBox = msgbox     

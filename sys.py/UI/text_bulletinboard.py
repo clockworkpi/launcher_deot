@@ -14,7 +14,7 @@ from textarea     import Textarea
 class Word:
     _T = ""
     _Color = MySkinManager.GiveColor('Text') ## default text color
-    _FontObj = MyLangManager.TrFont("varela12") ##default font
+    _FontObj = MyLangManager.TrFont("Eurostile12") ##default font
     _Size = 12
     _Bold = False
     _UndLine = False

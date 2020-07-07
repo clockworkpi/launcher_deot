@@ -316,7 +316,6 @@ class TitleBar(Widget):
         """
         aa_round_rect(self._CanvasHWND,  
                       (0,0,self._Width,self._Height),self._BgColor,8,0, self._BgColor)
-
         pygame.draw.rect(self._CanvasHWND,self._BgColor,(0,self._Height/2,Width,self._BarHeight), 0 )
         """
         
@@ -324,13 +323,21 @@ class TitleBar(Widget):
         self.ClearCanvas()
         title = MyLangManager.Tr(title)
         self._Title = title
+	
+	# get battery percentage, but not for music spectrum(GameShell RTA)
+        RTA_title = "GameShell RTA"
+        bat_pct = ""
+        if title != RTA_title and title != MyLangManager.Tr(RTA_title):
+            out = commands.getstatusoutput("upower -i /org/freedesktop/UPower/devices/battery_axp20x_battery | grep percentage | tail -c 5")
+            bat_pct = "".join(out[1]).strip() + "  "
         
         cur_time =  datetime.now().strftime("%H:%M")
-        time_text_font = MySkinManager.GiveFont("varela12")
+	cur_time = bat_pct + cur_time
+        time_text_font = MySkinManager.GiveFont("Eurostile12")
         time_text_size = time_text_font.size(cur_time)
-        title_text_size = MyLangManager.TrFont("varela16").size(title)
+        title_text_size = MyLangManager.TrFont("Eurostile16").size(title)
 
-        self._CanvasHWND.blit(MyLangManager.TrFont("varela16").render(title,True,self._SkinManager.GiveColor("Text")),midRect(title_text_size[0]/2+self._LOffset,
+        self._CanvasHWND.blit(MyLangManager.TrFont("Eurostile16").render(title,True,self._SkinManager.GiveColor("Text")),midRect(title_text_size[0]/2+self._LOffset,
                                                                     title_text_size[1]/2+(self._BarHeight-title_text_size[1])/2,
                                                                     title_text_size[0],title_text_size[1],Width,Height))
         self._CanvasHWND.blit( time_text_font.render(cur_time,True,self._SkinManager.GiveColor("Text")),midRect(Width-time_text_size[0]/2-self._ROffset,

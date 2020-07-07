@@ -1,1 +1,3 @@
-retroarch 
+#!/bin/bash
+
+retroarch

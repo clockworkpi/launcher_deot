@@ -27,7 +27,7 @@ class UntitledIcon(object):
     _Height = 80
 
     _Words = ["G", "s"]
-    _FontObj = MySkinManager.GiveFont("varela40")
+    _FontObj = MySkinManager.GiveFont("EurostileBold30")
 
     _BG = None  # initial surface
 

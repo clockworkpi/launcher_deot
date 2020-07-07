@@ -41,7 +41,6 @@ class InfoPageListItem(object):
         self._Fonts  = {}
 
     def SetSmallText(self,text):
-        
         l = MultiLabel()
         l.SetCanvasHWND(self._Parent._CanvasHWND)
         l.Init(text,self._Fonts["small"])
@@ -80,8 +79,9 @@ class InfoPageListItem(object):
 class AboutPage(Page):
     _FootMsg =  ["Nav.","","","Back",""]
     _MyList = []
-    _ListFontObj = MyLangManager.TrFont("varela13")
-    
+    #_ListFontObj = MyLangManager.TrFont("Eurostile13")
+    _ListFontObj = MySkinManager.GiveFont("Eurostile13")
+
     _AList = {}
 
     _Scrolled = 0
@@ -89,7 +89,7 @@ class AboutPage(Page):
     _BGwidth = 320
     _BGheight = 300
 
-    _DrawOnce = False
+    #_DrawOnce = False
     _Scroller = None
     
     def __init__(self):
@@ -106,7 +106,7 @@ class AboutPage(Page):
         st = st.strip("\t")
         out["value"] = st
         self._AList["uname"] = out
-
+        
         return
     
     def CpuMhz(self):
@@ -142,7 +142,7 @@ class AboutPage(Page):
                     
                 if line.startswith("model name"):
                     parts = line.split(":")
-#                    print( parts[1].strip() )
+                    #print( parts[1].strip() )
                     processor = {}
                     processor["key"]="processor"
                     processor["label"] = "Processor:"
@@ -152,7 +152,7 @@ class AboutPage(Page):
                     
                 if line.startswith("cpu MHz"):
                     parts = line.split(":")
-#                    print(parts[1].strip() )
+                    #print(parts[1].strip() )
                     cpumhz = {}
                     cpumhz["key"] = "cpumhz"
                     cpumhz["label"] = "CPU MHz:"
@@ -161,7 +161,7 @@ class AboutPage(Page):
                     self._AList["cpumhz"] = cpumhz
                 if line.startswith("cpu cores"):
                     parts = line.split(":")
-#                    print(parts[1].strip() )
+                    #print(parts[1].strip() )
                     cpucores = {}
                     cpucores["key"] = "cpucores"
                     cpucores["label"] = "CPU cores:"
@@ -169,7 +169,7 @@ class AboutPage(Page):
                     self._AList["cpucores"] = cpucores
                 if line.startswith("Features"):
                     parts = line.split(":")
-#                    print(parts[1].strip() )
+                    #print(parts[1].strip() )
                     f_ = {}
                     f_["key"] = "features"
                     f_["label"] = "Features:"
@@ -178,7 +178,7 @@ class AboutPage(Page):
                     
                 if line.startswith("flags"):
                     parts = line.split(":")
-#                    print(parts[1].strip() )
+                    #print(parts[1].strip() )
                     flags = {}
                     flags["key"] = "flags"
                     flags["label"] = "Flags:"
@@ -200,7 +200,7 @@ class AboutPage(Page):
                 if line.startswith("MemTotal"):
                     parts = line.split(":")
                     parts[1] = parts[1].replace("kB","")
-                    print(   parts[1].strip() )
+                    #print(   parts[1].strip() )
 
                     memory = {}
                     memory["key"] = "memory"
@@ -275,8 +275,7 @@ class AboutPage(Page):
             if self._Screen._CanvasHWND != None and self._CanvasHWND == None:
                 self._HWND = self._Screen._CanvasHWND
                 self._CanvasHWND = pygame.Surface( (self._Screen._Width,self._BGheight+50) )
-                self._CanvasHWND_Wallpaper = pygame.Surface( (self._Screen._Width,self._Screen._Height) )
-        
+
         self._PosX = self._Index*self._Screen._Width 
         self._Width = self._Screen._Width ## equal to screen width
         self._Height = self._Screen._Height
@@ -317,12 +316,11 @@ class AboutPage(Page):
         if self._PosY < 0:
             self._PosY += dis
             self._Scrolled += dis
-
         
     def OnLoadCb(self):
         self._Scrolled = 0
         self._PosY = 0
-        self._DrawOnce = False
+        #self._DrawOnce = False
 
     def OnReturnBackCb(self):
         self.ReturnToUpLevelPage()
@@ -346,42 +344,44 @@ class AboutPage(Page):
         
                                 
     def Draw(self):
+        # if self._DrawOnce == False:
+            
+            # self.ClearCanvas()
+            ##self._Ps.Draw()
         
-        if self._DrawOnce == False:
-            if self._Wallpaper:
-                self._CanvasHWND.fill((0,0,0,)) 
-                self._CanvasHWND.set_colorkey((0,0,0))
-            else:
-                self._CanvasHWND.fill(MySkinManager.GiveColor("White"))
+            # for i in self._MyList:
+                # i.Draw()
+                
+            # self._DrawOnce = True
             
-            #self._Ps.Draw()
+            # self._Icons["bg"].DrawRect((230,0,82,184),(228,0,82,184))
+            
+            # y = self._MyList[len(self._MyList)-1]._PosY+30
+            
+            # self._Icons["bg"].DrawRect(( (self._Width-191)/2,y,191,68),(65,232,191,68))          
+
+        # always redraw
+        if self._Wallpaper:
+            self._CanvasHWND.blit(self._Wallpaper,(0, self._PosY * -1))
+        else:
+            self.ClearCanvas()
         
-            for i in self._MyList:
-                i.Draw()
-               
-            self._DrawOnce = True
-            
-            self._Icons["bg"].DrawRect((230,0,82,184),(228,0,82,184))
-            
-            y = self._MyList[len(self._MyList)-1]._PosY+30
-            
-            self._Icons["bg"].DrawRect(( (self._Width-191)/2,y,191,68),(65,232,191,68))
+        for i in self._MyList:
+            i.Draw()
+        
+        self._Icons["bg"].DrawRect((230,0,82,184),(228,0,82,184))
+        
+        y = self._MyList[len(self._MyList)-1]._PosY+30
+        
+        self._Icons["bg"].DrawRect(( (self._Width-191)/2,y,191,68),(65,232,191,68))
             
         if self._HWND != None:
             self._HWND.fill(MySkinManager.GiveColor("White"))
             
-            if self._Wallpaper:
-                self._CanvasHWND_Wallpaper.blit(self._Wallpaper,(0,0))
-                self._CanvasHWND_Wallpaper.blit(self._CanvasHWND,(self._PosX,self._PosY,self._Width, self._Height )) 
-                self._HWND.blit(self._CanvasHWND_Wallpaper,(0,0,self._Width, self._Height ) )
-            else:
-                self._HWND.blit(self._CanvasHWND,(self._PosX,self._PosY,self._Width, self._Height )) 
-                
+            self._HWND.blit(self._CanvasHWND, (self._PosX, self._PosY, self._Width, self._Height ))
+            
             self._Scroller.UpdateSize(self._BGheight,abs(self._Scrolled)*3)
             self._Scroller.Draw()
-        
-        
-
 
 class APIOBJ(object):
 
@@ -405,5 +405,3 @@ def Init(main_screen):
     OBJ.Init(main_screen)
 def API(main_screen):
     OBJ.API(main_screen)
-    
-        
