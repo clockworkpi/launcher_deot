@@ -92,6 +92,8 @@ class MusicLibListPage(Page):
     _BGpng = None
     _BGwidth = 56
     _BGheight = 70
+
+    _Backspace = False
     
     def __init__(self):
         Page.__init__(self)
@@ -224,23 +226,60 @@ class MusicLibListPage(Page):
         self.SyncList("/")
         self._PsIndex = 0
         
-    def KeyDown(self,event):
-        
-        if IsKeyMenuOrB(event.key) or event.key == CurKeys["Left"]:
-            
+    # def KeyDown(self,event):
+    # fast: fast display mode
+    def KeyDown(self, event, fast = False):
+
+        # if IsKeyMenuOrB(event.key) or event.key == CurKeys["Left"]: 
+            # self.ReturnToUpLevelPage()
+            # self._Screen.Draw()
+            # self._Screen.SwapAndShow()
+
+        if IsKeyMenuOrB(event.key):
             self.ReturnToUpLevelPage()
             self._Screen.Draw()
             self._Screen.SwapAndShow()
-        
+
+        if event.key == CurKeys["Right"]:
+            if self._Backspace:
+                move = 6
+                pagedown = pygame.event.Event(pygame.KEYDOWN, key = CurKeys["Down"])
+
+                for i in range(move):
+                    self.KeyDown(pagedown, True)
+
+            self._Screen.Draw()
+            self._Screen.SwapAndShow()
+
+        if event.key == CurKeys["Left"]:
+            if not self._Backspace:
+                self.ReturnToUpLevelPage()
+            else:
+                move = 6
+                pageup = pygame.event.Event(pygame.KEYDOWN, key = CurKeys["Up"])
+
+                for i in range(move):
+                    self.KeyDown(pageup, True)
+
+            self._Screen.Draw()
+            self._Screen.SwapAndShow()
+
         if event.key == CurKeys["Up"]:
             self.ScrollUp()
-            self._Screen.Draw()
-            self._Screen.SwapAndShow()
+            # self._Screen.Draw()
+            # self._Screen.SwapAndShow()
+            if not fast:
+                self._Screen.Draw()
+                self._Screen.SwapAndShow()
+
         if event.key == CurKeys["Down"]:
             self.ScrollDown()
-            self._Screen.Draw()
-            self._Screen.SwapAndShow()
-        
+            # self._Screen.Draw()
+            # self._Screen.SwapAndShow()
+            if not fast:
+                self._Screen.Draw()
+                self._Screen.SwapAndShow()
+
         """
         if event.key == CurKeys["Right"]:
             self.FScrollDown(Step=5)
@@ -260,7 +299,16 @@ class MusicLibListPage(Page):
                                      
         if IsKeyStartOrA(event.key):
             self.Click()
-            
+
+        if event.key == CurKeys["Backspace"]:   # Shift + Menu
+            self._Backspace = not self._Backspace
+            if self._Backspace:
+                self._Screen._MsgBox.SetText("Page Up/Down: ON")
+            else:
+                self._Screen._MsgBox.SetText("Page Up/Down: OFF")
+            self._Screen._MsgBox.Draw()
+            self._Screen.SwapAndShow()
+
     def Draw(self):
         self.ClearCanvas()
 
@@ -277,7 +325,6 @@ class MusicLibListPage(Page):
                 v._Active = True
             else:
                 v._Active = False
-
             if v._Active == False:
                 v.NewCoord(start_x, start_y+counter* ListItem._Height)
                 counter+=1
@@ -325,4 +372,4 @@ class MusicLibListPage(Page):
                     if i._PosY < 0:
                         continue
                         
-                    i.Draw()
+                    i.Draw()  
