@@ -269,7 +269,7 @@ class UpdatePage(Page):
                             self._Screen.Draw()
                             
                             if "version" in json_:
-                                self._ConfirmPage.SnapMsg(MyLangManager.Tr("ConfirmUpdateToFQ") % (json_["version"] + "#" + json_["gitversion"]) )
+                                self._ConfirmPage.SnapMsg(MyLangManager.Tr("UpdateToFQ") % (json_["version"] + "-" + json_["gitversion"]) )
                             else:
                                 self._ConfirmPage.SnapMsg(MyLangManager.Tr("UpdateToFQ") % json_["gitversion"] )
                             self._Screen.SwapAndShow()
