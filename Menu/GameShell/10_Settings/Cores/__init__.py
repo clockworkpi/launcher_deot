@@ -209,7 +209,23 @@ class CoresPage(Page):
             self._Screen.Draw()
             self._Screen.SwapAndShow()
 
- 
+        if event.key == CurKeys["Left"]:    # PageUp
+            move = 3
+
+            for i in range(move):
+                self.ScrollUp()
+
+            self._Screen.Draw()
+            self._Screen.SwapAndShow()
+
+        if event.key == CurKeys["Right"]:   # PageDown
+            move = 3
+            
+            for i in range(move):
+                self.ScrollDown()
+
+            self._Screen.Draw()
+            self._Screen.SwapAndShow()
 
     def Draw(self):
         self.ClearCanvas()
@@ -248,5 +264,3 @@ def Init(main_screen):
     OBJ.Init(main_screen)
 def API(main_screen):
     OBJ.API(main_screen)
-    
-        
