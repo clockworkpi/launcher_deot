@@ -50,10 +50,12 @@ GameShell["Menu"] = pygame.K_ESCAPE
 SetXYABButtons(GetButtonsLayoutMode())
 
 GameShell["Select"] = pygame.K_SPACE
-GameShell["Start"] = pygame.K_RETURN
+GameShell["Start"]  = pygame.K_RETURN
 
 GameShell["LK1"] = pygame.K_h
 GameShell["LK5"] = pygame.K_l
+
+GameShell["Backspace"] = pygame.K_BACKSPACE     # Shift + Menu
 
 PC = {}
 
@@ -71,6 +73,8 @@ PC["Start"] = pygame.K_s
 
 PC["LK1"] = pygame.K_h
 PC["LK5"] = pygame.K_l
+
+PC["Backspace"] = pygame.K_BACKSPACE    # Shift + Menu
 
 if CurKeySet == "PC":
     CurKeys = PC
