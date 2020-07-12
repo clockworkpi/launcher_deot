@@ -434,9 +434,7 @@ class RomListPage(Page):
         if cur_time - self._Screen._LastKeyDown > 0.3:
             self._ScrollStep = 1 
 
-    # def KeyDown(self,event):
-    # fast: fast display mode
-    def KeyDown(self, event, fast = False):
+    def KeyDown(self,event):
 
         if IsKeyMenuOrB(event.key): 
             self.ReturnToUpLevelPage()
@@ -451,10 +449,9 @@ class RomListPage(Page):
                 self._Screen.SetCurPage(self._Parent.FavListPage)
             else:
                 move = 6
-                pagedown = pygame.event.Event(pygame.KEYDOWN, key = CurKeys["Down"])
 
                 for i in range(move):
-                    self.KeyDown(pagedown, True)
+                    self.ScrollDown()
 
             self._Screen.Draw()
             self._Screen.SwapAndShow()
@@ -462,10 +459,9 @@ class RomListPage(Page):
         if event.key == CurKeys["Left"]:
             if self._Backspace:
                 move = 6
-                pageup = pygame.event.Event(pygame.KEYDOWN, key = CurKeys["Up"])
 
                 for i in range(move):
-                    self.KeyDown(pageup, True)
+                    self.ScrollUp()
 
             self._Screen.Draw()
             self._Screen.SwapAndShow()
@@ -473,20 +469,14 @@ class RomListPage(Page):
         if event.key == CurKeys["Up"]:
             self.SpeedScroll(event.key)
             self.ScrollUp()
-            # self._Screen.Draw()
-            # self._Screen.SwapAndShow()
-            if not fast:
-                self._Screen.Draw()
-                self._Screen.SwapAndShow()
+            self._Screen.Draw()
+            self._Screen.SwapAndShow()
 
         if event.key == CurKeys["Down"]:
             self.SpeedScroll(event.key)
             self.ScrollDown()
-            # self._Screen.Draw()
-            # self._Screen.SwapAndShow()
-            if not fast:
-                self._Screen.Draw()
-                self._Screen.SwapAndShow()
+            self._Screen.Draw()
+            self._Screen.SwapAndShow()
 
         if IsKeyStartOrA(event.key):
             self.Click()
