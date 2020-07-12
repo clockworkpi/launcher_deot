@@ -154,3 +154,24 @@ vim ~/.gameshell_skin
 ```
 /home/cpi/launcher/skin/DEOT
 ```
+
+# PageUp and PageDown Keys
+
+D-Pad Up/Down
+```
+Main page
+```
+
+D-Pad Left/Right
+```
+Settings
+Timezone
+RetroArch Cores Manager
+```
+Shift + Menu & D-Pad Left/Right
+```
+ROM list
+Fav. list
+Music lib. list
+Music play list
+```
