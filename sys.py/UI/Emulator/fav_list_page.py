@@ -103,6 +103,8 @@ class FavListPage(Page):
     _BGheight = 73
     _RomSoConfirmDownloadPage = None
 
+    _Backspace = False
+
     
     def __init__(self):
         Page.__init__(self)
@@ -396,30 +398,65 @@ class FavListPage(Page):
         if cur_time - self._Screen._LastKeyDown > 0.3:
             self._ScrollStep = 1 
     
-    def KeyDown(self,event):
-        
-        if IsKeyMenuOrB(event.key) or event.key == CurKeys["Left"]: 
+    # def KeyDown(self,event):
+    # fast: fast display mode
+    def KeyDown(self, event, fast = False):
+
+        # if IsKeyMenuOrB(event.key) or event.key == CurKeys["Left"]:
+            # self.ReturnToUpLevelPage()
+            # self._Screen.Draw()
+            # self._Screen.SwapAndShow()
+
+        if IsKeyMenuOrB(event.key):
             self.ReturnToUpLevelPage()
             self._Screen.Draw()
             self._Screen.SwapAndShow()
 
+        if event.key == CurKeys["Right"]:
+            if self._Backspace:
+                move = 6
+                pagedown = pygame.event.Event(pygame.KEYDOWN, key = CurKeys["Down"])
+
+                for i in range(move):
+                    self.KeyDown(pagedown, True)
+
+            self._Screen.Draw()
+            self._Screen.SwapAndShow()
+
+        if event.key == CurKeys["Left"]:
+            if not self._Backspace:
+                self.ReturnToUpLevelPage()
+            else:
+                move = 6
+                pageup = pygame.event.Event(pygame.KEYDOWN, key = CurKeys["Up"])
+
+                for i in range(move):
+                    self.KeyDown(pageup, True)
+
+            self._Screen.Draw()
+            self._Screen.SwapAndShow()
         
         if event.key == CurKeys["Up"]:
             self.SpeedScroll(event.key)
             self.ScrollUp()
-            self._Screen.Draw()
-            self._Screen.SwapAndShow()
+            # self._Screen.Draw()
+            # self._Screen.SwapAndShow()
+            if not fast:
+                self._Screen.Draw()
+                self._Screen.SwapAndShow()
+
         if event.key == CurKeys["Down"]:
             self.SpeedScroll(event.key)
             self.ScrollDown()
-            self._Screen.Draw()
-            self._Screen.SwapAndShow()
-        
+            # self._Screen.Draw()
+            # self._Screen.SwapAndShow()
+            if not fast:
+                self._Screen.Draw()
+                self._Screen.SwapAndShow()
 
         if IsKeyStartOrA(event.key):
             self.Click()
 
-                
         if event.key == CurKeys["X"]: #Scan current
            self.ReScan() 
            self._Screen.Draw()
@@ -450,7 +487,16 @@ class FavListPage(Page):
                 self.ReScan()                    
                 self._Screen.Draw()
                 self._Screen.SwapAndShow()
-                
+
+        if event.key == CurKeys["Backspace"]:   # Shift + Menu
+            self._Backspace = not self._Backspace
+            if self._Backspace:
+                self._Screen._MsgBox.SetText("Page Up/Down: ON")
+            else:
+                self._Screen._MsgBox.SetText("Page Up/Down: OFF")
+            self._Screen._MsgBox.Draw()
+            self._Screen.SwapAndShow()
+
     def Draw(self):
         self.ClearCanvas()
         
