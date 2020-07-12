@@ -74,7 +74,9 @@ class PlayListPage(Page):
     _Scrolled = 0
 
     _CurSongName = ""
-    
+
+    _Backspace = False
+
     def __init__(self):
         self._Icons = {}
         Page.__init__(self)
@@ -235,7 +237,6 @@ class PlayListPage(Page):
                         self._MyList[i]._PosY += self._Scrolled * self._MyList[i]._Height
             
     def Click(self):
-        #self.RefreshPsIndex()
         if len(self._MyList) == 0:
             return
         
@@ -251,7 +252,9 @@ class PlayListPage(Page):
         self.SyncList()
         self.SyncScroll()
         
-    def KeyDown(self,event):
+    # def KeyDown(self,event):
+    # fast: fast display mode
+    def KeyDown(self, event, fast = False):
         if IsKeyMenuOrB(event.key):
             if myvars.Poller != None:
                 myvars.Poller.stop()
@@ -264,19 +267,47 @@ class PlayListPage(Page):
         
         if event.key == CurKeys["Up"]:
             self.ScrollUp()
-            self._Screen.Draw()
-            self._Screen.SwapAndShow()
+            # self._Screen.Draw()
+            # self._Screen.SwapAndShow()
+            if not fast:
+                self._Screen.Draw()
+                self._Screen.SwapAndShow()
+
         if event.key == CurKeys["Down"]:
             self.ScrollDown()
-            self._Screen.Draw()
-            self._Screen.SwapAndShow()
-        
+            # self._Screen.Draw()
+            # self._Screen.SwapAndShow()
+            if not fast:
+                self._Screen.Draw()
+                self._Screen.SwapAndShow()
+
         if event.key == CurKeys["Right"]:#add
-            self._Screen.PushCurPage()
-            self._Screen.SetCurPage(myvars.MusicLibListPage)
+            # self._Screen.PushCurPage()
+            # self._Screen.SetCurPage(myvars.MusicLibListPage)
+            if not self._Backspace:
+                self._Screen.PushCurPage()
+                self._Screen.SetCurPage(myvars.MusicLibListPage)
+            else:
+                move = 6
+                pagedown = pygame.event.Event(pygame.KEYDOWN, key = CurKeys["Down"])
+
+                for i in range(move):
+                    self.KeyDown(pagedown, True)
+
             self._Screen.Draw()
             self._Screen.SwapAndShow()
-        
+
+        if event.key == CurKeys["Left"]:
+            if self._Backspace:
+                move = 6
+                pageup = pygame.event.Event(pygame.KEYDOWN, key = CurKeys["Up"])
+
+                for i in range(move):
+                    self.KeyDown(pageup, True)
+
+            self._Screen.Draw()
+            self._Screen.SwapAndShow()
+
         if event.key == CurKeys["Y"]:# del selected songs
             myvars.Poller.delete(self._PsIndex)
             self.SyncList()
@@ -291,7 +322,16 @@ class PlayListPage(Page):
             self._Screen.PushPage(myvars.SpectrumPage)
             self._Screen.Draw()
             self._Screen.SwapAndShow()
-            
+
+        if event.key == CurKeys["Backspace"]:   # Shift + Menu
+            self._Backspace = not self._Backspace
+            if self._Backspace:
+                self._Screen._MsgBox.SetText("Page Up/Down: ON")
+            else:
+                self._Screen._MsgBox.SetText("Page Up/Down: OFF")
+            self._Screen._MsgBox.Draw()
+            self._Screen.SwapAndShow()
+
     def Draw(self):
         self.ClearCanvas()
 
