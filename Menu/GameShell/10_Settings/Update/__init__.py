@@ -30,6 +30,14 @@ import config
 
 LauncherLoc = "/home/cpi/launcher"
 
+# get git short hash
+cur_dir = os.getcwd()
+os.chdir(LauncherLoc)
+current_git_version = get_git_revision_short_hash()
+current_git_version = current_git_version.strip("\n")
+current_git_version = current_git_version.strip("\t")
+os.chdir(cur_dir)
+
 class UpdateDownloadPage(DownloadProcessPage):
     _MD5 = ""
 
@@ -206,6 +214,12 @@ class UpdatePage(Page):
         it["value"] = config.VERSION
         self._AList["version"] = it
         
+        git = {}
+        git["key"] = "githash"
+        git["label"] = "Git Hash"
+        git["value"] = current_git_version
+        self._AList["githash"] = git
+        
         self.GenList()
         
     def CheckUpdate(self):
@@ -238,12 +252,12 @@ class UpdatePage(Page):
                             self._Screen.SwapAndShow()
                             
                     elif "gitversion" in json_: ### just use git to  run update
-                        cur_dir = os.getcwd()
-                        os.chdir(LauncherLoc)
-                        current_git_version = get_git_revision_short_hash()
-                        current_git_version = current_git_version.strip("\n")
-                        current_git_version = current_git_version.strip("\t")
-                        os.chdir(cur_dir)
+                        # cur_dir = os.getcwd()
+                        # os.chdir(LauncherLoc)
+                        # current_git_version = get_git_revision_short_hash()
+                        # current_git_version = current_git_version.strip("\n")
+                        # current_git_version = current_git_version.strip("\t")
+                        # os.chdir(cur_dir)
                         if current_git_version != json_["gitversion"]:
                             self._ConfirmPage._URL = None
                             self._ConfirmPage._MD5 = None
@@ -255,7 +269,7 @@ class UpdatePage(Page):
                             self._Screen.Draw()
                             
                             if "version" in json_:
-                                self._ConfirmPage.SnapMsg(MyLangManager.Tr("ConfirmUpdateToFQ") % json_["version"] )
+                                self._ConfirmPage.SnapMsg(MyLangManager.Tr("UpdateToFQ") % (json_["version"] + "-" + json_["gitversion"]) )
                             else:
                                 self._ConfirmPage.SnapMsg(MyLangManager.Tr("UpdateToFQ") % json_["gitversion"] )
                             self._Screen.SwapAndShow()

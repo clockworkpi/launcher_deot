@@ -124,15 +124,33 @@ class ListPage(Page):
             self.ScrollUp()
             self._Screen.Draw()
             self._Screen.SwapAndShow()
+
         if event.key == CurKeys["Down"]:
             self.ScrollDown()
             self._Screen.Draw()
             self._Screen.SwapAndShow()
-        
 
         if IsKeyStartOrA(event.key):
             self.Click()
+
+        if event.key == CurKeys["Left"]:    # PageUp
+            move = 3
             
+            for i in range(move):
+                self.ScrollUp()
+
+            self._Screen.Draw()
+            self._Screen.SwapAndShow()
+
+        if event.key == CurKeys["Right"]:   # PageDown
+            move = 3
+            
+            for i in range(move):
+                self.ScrollDown()
+
+            self._Screen.Draw()
+            self._Screen.SwapAndShow() 
+
     def Draw(self):
         self.ClearCanvas()
 
@@ -151,5 +169,3 @@ class ListPage(Page):
             self._Ps.Draw()
             for i in self._MyList:
                 i.Draw()
-
-            

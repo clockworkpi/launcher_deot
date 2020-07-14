@@ -103,6 +103,8 @@ class FavListPage(Page):
     _BGheight = 73
     _RomSoConfirmDownloadPage = None
 
+    _Backspace = False
+
     
     def __init__(self):
         Page.__init__(self)
@@ -397,29 +399,54 @@ class FavListPage(Page):
             self._ScrollStep = 1 
     
     def KeyDown(self,event):
-        
-        if IsKeyMenuOrB(event.key) or event.key == CurKeys["Left"]: 
+
+        # if IsKeyMenuOrB(event.key) or event.key == CurKeys["Left"]:
+            # self.ReturnToUpLevelPage()
+            # self._Screen.Draw()
+            # self._Screen.SwapAndShow()
+
+        if IsKeyMenuOrB(event.key):
             self.ReturnToUpLevelPage()
             self._Screen.Draw()
             self._Screen.SwapAndShow()
 
+        if event.key == CurKeys["Right"]:
+            if self._Backspace:
+                move = 6
+
+                for i in range(move):
+                    self.ScrollDown()
+
+            self._Screen.Draw()
+            self._Screen.SwapAndShow()
+
+        if event.key == CurKeys["Left"]:
+            if not self._Backspace:
+                self.ReturnToUpLevelPage()
+            else:
+                move = 6
+
+                for i in range(move):
+                    self.ScrollUp()
+
+            self._Screen.Draw()
+            self._Screen.SwapAndShow()
         
         if event.key == CurKeys["Up"]:
             self.SpeedScroll(event.key)
             self.ScrollUp()
             self._Screen.Draw()
             self._Screen.SwapAndShow()
+
         if event.key == CurKeys["Down"]:
             self.SpeedScroll(event.key)
             self.ScrollDown()
             self._Screen.Draw()
             self._Screen.SwapAndShow()
-        
 
         if IsKeyStartOrA(event.key):
             self.Click()
 
-                
         if event.key == CurKeys["X"]: #Scan current
            self.ReScan() 
            self._Screen.Draw()
@@ -450,7 +477,16 @@ class FavListPage(Page):
                 self.ReScan()                    
                 self._Screen.Draw()
                 self._Screen.SwapAndShow()
-                
+
+        if event.key == CurKeys["Backspace"]:   # Shift + Menu
+            self._Backspace = not self._Backspace
+            if self._Backspace:
+                self._Screen._MsgBox.SetText("Page Up/Down: ON")
+            else:
+                self._Screen._MsgBox.SetText("Page Up/Down: OFF")
+            self._Screen._MsgBox.Draw()
+            self._Screen.SwapAndShow()
+
     def Draw(self):
         self.ClearCanvas()
         

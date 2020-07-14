@@ -408,7 +408,8 @@ class Page(Widget):
 
         return all_last_posx
 
-    def IconSmoothUp(self,icon_ew):
+    # def IconSmoothUp(self,icon_ew):
+    def IconSmoothUp(self, icon_ew, fast = False):
         data = self.EasingData(self._PosX,icon_ew)
         data2 = self.IconStepMoveData(self._SelectedIconTopOffset,len(data))
         
@@ -421,10 +422,14 @@ class Page(Widget):
             if self._Icons[self._PrevIconIndex]._PosY < self._Height/2:
                 self._Icons[self._PrevIconIndex]._PosY+=data2[i]
 
-            self.DrawIcons()
-            self._Screen.SwapAndShow()        
-                
-    def IconsEasingLeft(self,icon_ew):
+            # self.DrawIcons()
+            # self._Screen.SwapAndShow()
+            if not fast:
+                self.DrawIcons()
+                self._Screen.SwapAndShow()
+
+    # def IconsEasingLeft(self,icon_ew):
+    def IconsEasingLeft(self, icon_ew, fast = False):
 
         data = self.EasingData(self._PosX,icon_ew)
         data2 = self.IconStepMoveData(self._SelectedIconTopOffset,len(data))
@@ -438,10 +443,15 @@ class Page(Widget):
             
             if self._Icons[self._PrevIconIndex]._PosY < self._Height/2:
                 self._Icons[self._PrevIconIndex]._PosY+=data2[i]
-            self.DrawIcons()
-            self._Screen.SwapAndShow()
-                
-    def IconsEasingRight(self,icon_ew):
+
+            # self.DrawIcons()
+            # self._Screen.SwapAndShow()
+            if not fast:
+                self.DrawIcons()
+                self._Screen.SwapAndShow()
+
+    # def IconsEasingRight(self,icon_ew):
+    def IconsEasingRight(self, icon_ew, fast = False):
         
         data = self.EasingData(self._PosX,icon_ew)
         data2 = self.IconStepMoveData(self._SelectedIconTopOffset,len(data))
@@ -452,13 +462,16 @@ class Page(Widget):
 
             
             self._Icons[self._IconIndex]._PosY-=data2[i]
-            
+
             if self._Icons[self._PrevIconIndex]._PosY < self._Height/2:
                 self._Icons[self._PrevIconIndex]._PosY+=data2[i]
-                
-            self.DrawIcons()
-            self._Screen.SwapAndShow()
-            
+
+            # self.DrawIcons()
+            # self._Screen.SwapAndShow()
+            if not fast:
+                self.DrawIcons()
+                self._Screen.SwapAndShow()
+
     def EasingLeft(self,ew): #ew int
 
         data = self.EasingData(self._PosX,ew)
@@ -624,7 +637,10 @@ class Page(Widget):
             for i in range(0,len(self._MyList)):
                 self._MyList[i]._PosY -= self._MyList[i]._Height*dy
     
-    def KeyDown(self,event):##default keydown,every inherited page class should have it's own KeyDown
+    # def KeyDown(self,event):##default keydown,every inherited page class should have it's own KeyDown
+    # fast: fast display mode
+    def KeyDown(self, event, fast = False):##default keydown,every inherited page class should have it's own KeyDown
+
         if IsKeyMenuOrB(event.key):
             self.ReturnToUpLevelPage()
             self._Screen.Draw()
@@ -633,37 +649,73 @@ class Page(Widget):
         if event.key == CurKeys["Right"]:
             if self.MoveIconIndexNext() == True:
                 if self._IconIndex == (self._IconNumbers -1) or self._PrevIconIndex == 0:
-                    self.IconSmoothUp(icon_width + self._PageIconMargin)
+                    # self.IconSmoothUp(icon_width + self._PageIconMargin)
+                    self.IconSmoothUp(icon_width + self._PageIconMargin, fast)
                 else:
-                    self.IconsEasingLeft(icon_width + self._PageIconMargin)
+                    # self.IconsEasingLeft(icon_width + self._PageIconMargin)
+                    self.IconsEasingLeft(icon_width + self._PageIconMargin, fast)
             else:
                 screen_icons = int(math.floor(self._Screen._Width / (icon_width + self._PageIconMargin)))
                 if self._IconNumbers > screen_icons:
-                    self.IconsEasingRight((icon_width + self._PageIconMargin) * (self._IconNumbers - screen_icons))
+                    # self.IconsEasingRight((icon_width + self._PageIconMargin) * (self._IconNumbers - screen_icons))
+                    self.IconsEasingRight((icon_width + self._PageIconMargin) * (self._IconNumbers - screen_icons), fast)
                 elif self._IconNumbers > 0:
-                    self.IconSmoothUp(icon_width+ self._PageIconMargin)
+                    # self.IconSmoothUp(icon_width+ self._PageIconMargin)
+                    self.IconSmoothUp(icon_width+ self._PageIconMargin, fast)
 
             self._PsIndex  = self._IconIndex
-            self._Screen.Draw()
-            self._Screen.SwapAndShow()
+            # self._Screen.Draw()
+            # self._Screen.SwapAndShow()
+            if not fast:
+                self._Screen.Draw()
+                self._Screen.SwapAndShow()
             
         if event.key == CurKeys["Left"]:
             if self.MoveIconIndexPrev() == True:
                 if self._IconIndex == 0 or self._PrevIconIndex == (self._IconNumbers -1):
-                    self.IconSmoothUp(icon_width + self._PageIconMargin)
+                    # self.IconSmoothUp(icon_width + self._PageIconMargin)
+                    self.IconSmoothUp(icon_width + self._PageIconMargin, fast)
                 else:
-                    self.IconsEasingRight(icon_width + self._PageIconMargin)
+                    # self.IconsEasingRight(icon_width + self._PageIconMargin)
+                    self.IconsEasingRight(icon_width + self._PageIconMargin, fast)
             else:
                 screen_icons = int(math.floor(self._Screen._Width / (icon_width + self._PageIconMargin)))
                 if self._IconNumbers > screen_icons:
-                    self.IconsEasingLeft((icon_width + self._PageIconMargin) * (self._IconNumbers - screen_icons))
+                    # self.IconsEasingLeft((icon_width + self._PageIconMargin) * (self._IconNumbers - screen_icons))
+                    self.IconsEasingLeft((icon_width + self._PageIconMargin) * (self._IconNumbers - screen_icons), fast)
                 elif self._IconNumbers > 0:
-                    self.IconSmoothUp(icon_width+ self._PageIconMargin)
+                    # self.IconSmoothUp(icon_width+ self._PageIconMargin)
+                    self.IconSmoothUp(icon_width+ self._PageIconMargin, fast)
 
             self._PsIndex = self._IconIndex
-            self._Screen.Draw()
+            # self._Screen.Draw()
+            # self._Screen.SwapAndShow()
+            if not fast:
+                self._Screen.Draw()
+                self._Screen.SwapAndShow()
+
+        if event.key == CurKeys["Up"]:
+            move = 3
+            pageup = pygame.event.Event(pygame.KEYDOWN, key = CurKeys["Left"])
+
+            for i in range(move):
+                self.KeyDown(pageup, True)
+
+            self.DrawIcons()            # redraw icons
+            self._Screen.Draw()         # show selected icon
             self._Screen.SwapAndShow()
-                
+
+        if event.key == CurKeys["Down"]:
+            move = 3
+            pagedown = pygame.event.Event(pygame.KEYDOWN, key = CurKeys["Right"])
+            
+            for i in range(move):
+                self.KeyDown(pagedown, True)
+
+            self.DrawIcons()            # redraw icons
+            self._Screen.Draw()         # show selected icon
+            self._Screen.SwapAndShow()
+
         if IsKeyStartOrA(event.key):
             self.IconClick()
             self._Screen.Draw()
