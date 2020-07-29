@@ -301,28 +301,48 @@ class RomListPage(Page):
         self._PsIndex -= self._ScrollStep
         
         if self._PsIndex < 0:
-            self._PsIndex = 0
-        dy = tmp - self._PsIndex
+            # self._PsIndex = 0
+            self._PsIndex = len(self._MyList) -1    # to end
+            
+        # dy = tmp - self._PsIndex
+        dy = abs(tmp - self._PsIndex)
         cur_li = self._MyList[self._PsIndex]
         if cur_li._PosY < 0:
             for i in range(0, len(self._MyList)):
-                self._MyList[i]._PosY += self._MyList[i]._Height*dy
-            self._Scrolled +=dy
+                self._MyList[i]._PosY += self._MyList[i]._Height * dy
+            self._Scrolled += dy
+
+        # loop scroll, to end
+        # dy - 5: 6 items on screen, 6 - 1 = 5
+        if self._PsIndex == len(self._MyList) - 1:
+            for i in range(0, len(self._MyList)):
+                self._MyList[i]._PosY -= self._MyList[i]._Height * (dy - 5)
+            self._Scrolled -= dy
 
     def ScrollDown(self):
         if len(self._MyList) == 0:
             return
         tmp = self._PsIndex
         self._PsIndex +=self._ScrollStep
+
         if self._PsIndex >= len(self._MyList):
-            self._PsIndex = len(self._MyList) -1
+            # self._PsIndex = len(self._MyList) -1
+            self._PsIndex = 0   # to first
         
-        dy = self._PsIndex - tmp 
+        # dy = self._PsIndex - tmp
+        dy = abs(self._PsIndex - tmp)
         cur_li = self._MyList[self._PsIndex]
-        if cur_li._PosY +cur_li._Height > self._Height:
+        if cur_li._PosY + cur_li._Height > self._Height:
             for i in range(0,len(self._MyList)):
-                self._MyList[i]._PosY -= self._MyList[i]._Height*dy
+                self._MyList[i]._PosY -= self._MyList[i]._Height * dy
             self._Scrolled -= dy
+
+        # loop scroll, to first
+        # dy - 5: 6 items on screen, 6 - 1 = 5
+        if self._PsIndex == 0:
+            for i in range(0, len(self._MyList)):
+                self._MyList[i]._PosY += self._MyList[i]._Height * (dy - 5)
+            self._Scrolled += dy
             
     def SyncScroll(self):
         ## 
