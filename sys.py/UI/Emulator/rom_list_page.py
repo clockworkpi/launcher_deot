@@ -318,13 +318,12 @@ class RomListPage(Page):
         # loop scroll, to end
         if self._PsIndex == len(self._MyList) - 1:
             # check items per page
-            if len(self._MyList) < self._ItemsPerPage:
-                self._ItemsPerPage = len(self._MyList)
-            self._ItemsPerPage -= 1     # not include current item
-            for i in range(0, len(self._MyList)):
-                self._MyList[i]._PosY -= self._MyList[i]._Height * (dy - self._ItemsPerPage)
+            if len(self._MyList) > self._ItemsPerPage:
+                self._ItemsPerPage -= 1                 # not include current item
+                for i in range(0, len(self._MyList)):
+                    self._MyList[i]._PosY -= self._MyList[i]._Height * (dy - self._ItemsPerPage)
             self._Scrolled -= dy
-            self._ItemsPerPage = 6      # reset to 6
+            self._ItemsPerPage = 6                      # reset to 6
 
     def ScrollDown(self):
         # if len(self._MyList) == 0:
@@ -349,13 +348,12 @@ class RomListPage(Page):
         # loop scroll, to first
         if self._PsIndex == 0:
             # check items per page
-            if len(self._MyList) < self._ItemsPerPage:
-                self._ItemsPerPage = len(self._MyList)
-            self._ItemsPerPage -= 1     # not include current item
-            for i in range(0, len(self._MyList)):
-                self._MyList[i]._PosY += self._MyList[i]._Height * (dy - self._ItemsPerPage)
+            if len(self._MyList) > self._ItemsPerPage:
+                self._ItemsPerPage -= 1                 # not include current item
+                for i in range(0, len(self._MyList)):
+                    self._MyList[i]._PosY += self._MyList[i]._Height * (dy - self._ItemsPerPage)
             self._Scrolled += dy
-            self._ItemsPerPage = 6      # reset to 6
+            self._ItemsPerPage = 6                      # reset to 6
 
     def SyncScroll(self):
         ## 
