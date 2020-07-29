@@ -111,6 +111,7 @@ class Page(Widget):
     _Padding = pygame.Rect(0, 0, 0, 0)  # x,y,w,h
     _Margin = pygame.Rect(0, 0, 0, 0)
     _ScrollStep = 1
+    _ItemsPerPage = 6
 
     def __init__(self):
         self._Icons = []
@@ -582,11 +583,18 @@ class Page(Widget):
 
     # make sure the Class has the _MyList
     def ScrollDown(self):
-        if len(self._MyList) == 0:
+        # if len(self._MyList) == 0:
+        if len(self._MyList) <= 1:
             return
         self._PsIndex +=1
         if self._PsIndex >= len(self._MyList):
-            self._PsIndex = len(self._MyList) -1
+            # self._PsIndex = len(self._MyList) -1
+
+            # loop scroll, to first
+            if len(self._MyList) > self._ItemsPerPage:
+                self.FScrollUp(len(self._MyList) - self._ItemsPerPage)
+            self._PsIndex = 0
+            return
 
         cur_li = self._MyList[self._PsIndex]
         if cur_li._PosY +cur_li._Height > self._Height:
@@ -594,18 +602,27 @@ class Page(Widget):
                 self._MyList[i]._PosY -= self._MyList[i]._Height
     
     def ScrollUp(self):
-        if len(self._MyList) == 0:
+        # if len(self._MyList) == 0:
+        if len(self._MyList) <= 1:
             return
         self._PsIndex -= 1
         if self._PsIndex < 0:
-            self._PsIndex = 0
+            # self._PsIndex = 0
+
+            # loop scroll, to end
+            if len(self._MyList) > self._ItemsPerPage:
+                self.FScrollDown(len(self._MyList) - self._ItemsPerPage)
+            self._PsIndex = len(self._MyList) - 1
+            return
+
         cur_li = self._MyList[self._PsIndex]
         if cur_li._PosY < 0:
             for i in range(0, len(self._MyList)):
                 self._MyList[i]._PosY += self._MyList[i]._Height
 
     def FScrollUp(self,Step=1):
-        if len(self._MyList) == 0:
+        # if len(self._MyList) == 0:
+        if len(self._MyList) <= 1:
             return
         tmp = self._PsIndex
         self._PsIndex -= Step
@@ -625,7 +642,8 @@ class Page(Widget):
             self._PsIndex = len(self._MyList) -1
         
     def FScrollDown(self,Step=1):
-        if len(self._MyList) == 0:
+        # if len(self._MyList) == 0:
+        if len(self._MyList) <= 1:
             return
         tmp = self._PsIndex
         self._PsIndex +=Step
