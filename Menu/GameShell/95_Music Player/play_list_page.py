@@ -77,6 +77,8 @@ class PlayListPage(Page):
 
     _Backspace = False
 
+    _ItemsPerPage = 6
+
     def __init__(self):
         self._Icons = {}
         Page.__init__(self)
@@ -196,30 +198,84 @@ class PlayListPage(Page):
         self._Scroller.Init()
         
         
+    # def ScrollUp(self):
+        # if len(self._MyList) == 0:
+            # return
+        # self._PsIndex -= 1
+        # if self._PsIndex < 0:
+            # self._PsIndex = 0
+        # cur_li = self._MyList[self._PsIndex]
+        # if cur_li._PosY < 0:
+            # for i in range(0, len(self._MyList)):
+                # self._MyList[i]._PosY += self._MyList[i]._Height
+            # self._Scrolled +=1
+
+    # def ScrollDown(self):
+        # if len(self._MyList) == 0:
+            # return
+        # self._PsIndex +=1
+        # if self._PsIndex >= len(self._MyList):
+            # self._PsIndex = len(self._MyList) -1
+
+        # cur_li = self._MyList[self._PsIndex]
+        # if cur_li._PosY +cur_li._Height > self._Height:
+            # for i in range(0,len(self._MyList)):
+                # self._MyList[i]._PosY -= self._MyList[i]._Height
+            # self._Scrolled -=1
+
     def ScrollUp(self):
-        if len(self._MyList) == 0:
+        if len(self._MyList) <= 1:
             return
-        self._PsIndex -= 1
+        
+        tmp = self._PsIndex
+        self._PsIndex -= self._ScrollStep
+        
         if self._PsIndex < 0:
-            self._PsIndex = 0
+            self._PsIndex = len(self._MyList) - 1   # to end
+
+        dy = abs(tmp - self._PsIndex)
         cur_li = self._MyList[self._PsIndex]
         if cur_li._PosY < 0:
             for i in range(0, len(self._MyList)):
-                self._MyList[i]._PosY += self._MyList[i]._Height
-            self._Scrolled +=1
+                self._MyList[i]._PosY += self._MyList[i]._Height * dy
+            self._Scrolled += dy
+
+        # loop scroll, to end
+        if self._PsIndex == len(self._MyList) - 1:
+            # check items per page
+            if len(self._MyList) > self._ItemsPerPage:
+                self._ItemsPerPage -= 1                 # not include current item
+                for i in range(0, len(self._MyList)):
+                    self._MyList[i]._PosY -= self._MyList[i]._Height * (dy - self._ItemsPerPage)
+            self._Scrolled -= dy
+            self._ItemsPerPage = 6                      # reset to 6
 
     def ScrollDown(self):
-        if len(self._MyList) == 0:
+        if len(self._MyList) <= 1:
             return
-        self._PsIndex +=1
-        if self._PsIndex >= len(self._MyList):
-            self._PsIndex = len(self._MyList) -1
 
+        tmp = self._PsIndex
+        self._PsIndex +=self._ScrollStep
+
+        if self._PsIndex >= len(self._MyList):
+            self._PsIndex = 0   # to first
+
+        dy = abs(self._PsIndex - tmp)
         cur_li = self._MyList[self._PsIndex]
-        if cur_li._PosY +cur_li._Height > self._Height:
+        if cur_li._PosY + cur_li._Height > self._Height:
             for i in range(0,len(self._MyList)):
-                self._MyList[i]._PosY -= self._MyList[i]._Height
-            self._Scrolled -=1
+                self._MyList[i]._PosY -= self._MyList[i]._Height * dy
+            self._Scrolled -= dy
+
+        # loop scroll, to first
+        if self._PsIndex == 0:
+            # check items per page
+            if len(self._MyList) > self._ItemsPerPage:
+                self._ItemsPerPage -= 1                 # not include current item
+                for i in range(0, len(self._MyList)):
+                    self._MyList[i]._PosY += self._MyList[i]._Height * (dy - self._ItemsPerPage)
+            self._Scrolled += dy
+            self._ItemsPerPage = 6                      # reset to 6
 
     def SyncScroll(self):# show where it left
         if self._Scrolled == 0:
