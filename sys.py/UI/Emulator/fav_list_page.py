@@ -105,7 +105,8 @@ class FavListPage(Page):
 
     _Backspace = False
 
-    
+    _ItemsPerPage = 6
+
     def __init__(self):
         Page.__init__(self)
         self._Icons = {}
@@ -279,11 +280,15 @@ class FavListPage(Page):
             self._Scrolled += dy
 
         # loop scroll, to end
-        # dy - 5: 6 items on screen, 6 - 1 = 5
         if self._PsIndex == len(self._MyList) - 1:
+            # check items per page
+            if len(self._MyList) < self._ItemsPerPage:
+                self._ItemsPerPage = len(self._MyList)
+            self._ItemsPerPage -= 1     # not include current item
             for i in range(0, len(self._MyList)):
-                self._MyList[i]._PosY -= self._MyList[i]._Height * (dy - 5)
+                self._MyList[i]._PosY -= self._MyList[i]._Height * (dy - self._ItemsPerPage)
             self._Scrolled -= dy
+            self._ItemsPerPage = 6      # reset to 6
 
     def ScrollDown(self):
         if len(self._MyList) == 0:
@@ -304,11 +309,15 @@ class FavListPage(Page):
             self._Scrolled -= dy
 
         # loop scroll, to first
-        # dy - 5: 6 items on screen, 6 - 1 = 5
         if self._PsIndex == 0:
+            # check items per page
+            if len(self._MyList) < self._ItemsPerPage:
+                self._ItemsPerPage = len(self._MyList)
+            self._ItemsPerPage -= 1     # not include current item
             for i in range(0, len(self._MyList)):
-                self._MyList[i]._PosY += self._MyList[i]._Height * (dy - 5)
+                self._MyList[i]._PosY += self._MyList[i]._Height * (dy - self._ItemsPerPage)
             self._Scrolled += dy
+            self._ItemsPerPage = 6      # reset to 6
     
     def SyncScroll(self):
         ## 
@@ -416,7 +425,10 @@ class FavListPage(Page):
         cur_time = time.time()
             
         if cur_time - self._Screen._LastKeyDown > 0.3:
-            self._ScrollStep = 1 
+            self._ScrollStep = 1
+
+        if len(self._MyList) < self._ItemsPerPage:
+            self._ScrollStep = 1
     
     def KeyDown(self,event):
 
