@@ -532,7 +532,7 @@ class GameStorePage(Page):
    
     _AList = {}
 
-    _Scrolled = 0
+    # _Scrolled = 0
     
     _BGwidth = 320
     _BGheight = 240-24-20
@@ -1020,32 +1020,32 @@ class GameStorePage(Page):
         self._Screen.SwapAndShow()
         """
 
-    def ScrollDown(self):
-        if len(self._MyList) == 0:
-            return
-        self._PsIndex += 1
-        if self._PsIndex >= len(self._MyList):
-            self._PsIndex = len(self._MyList)-1
+    # def ScrollDown(self):
+        # if len(self._MyList) == 0:
+            # return
+        # self._PsIndex += 1
+        # if self._PsIndex >= len(self._MyList):
+            # self._PsIndex = len(self._MyList)-1
 
-        cur_li = self._MyList[self._PsIndex]
-        if cur_li._PosY+cur_li._Height > self._Height:
-            for i in range(0, len(self._MyList)):
-                self._MyList[i]._PosY -= self._MyList[i]._Height
+        # cur_li = self._MyList[self._PsIndex]
+        # if cur_li._PosY+cur_li._Height > self._Height:
+            # for i in range(0, len(self._MyList)):
+                # self._MyList[i]._PosY -= self._MyList[i]._Height
 
-            self._Scrolled_cnt -= self._MyList[i]._Height
+            # self._Scrolled_cnt -= self._MyList[i]._Height
 
-    def ScrollUp(self):
-        if len(self._MyList) == 0:
-            return
-        self._PsIndex -= 1
-        if self._PsIndex < 0:
-            self._PsIndex = 0
-        cur_li = self._MyList[self._PsIndex]
-        if cur_li._PosY < 0:
-            for i in range(0, len(self._MyList)):
-                self._MyList[i]._PosY += self._MyList[i]._Height
+    # def ScrollUp(self):
+        # if len(self._MyList) == 0:
+            # return
+        # self._PsIndex -= 1
+        # if self._PsIndex < 0:
+            # self._PsIndex = 0
+        # cur_li = self._MyList[self._PsIndex]
+        # if cur_li._PosY < 0:
+            # for i in range(0, len(self._MyList)):
+                # self._MyList[i]._PosY += self._MyList[i]._Height
 
-            self._Scrolled_cnt += self._MyList[i]._Height
+            # self._Scrolled_cnt += self._MyList[i]._Height
 
     def KeyDown(self,event):
         if IsKeyMenuOrB(event.key):
@@ -1116,12 +1116,26 @@ class GameStorePage(Page):
                 self.PreviewGame()
  
         if event.key == CurKeys["Up"]:
-            self.ScrollUp()
+            # self.ScrollUp()
+            self.SpeedScroll(event.key)
+            self.ScrollUp(self._ScrollStep)
             self._Screen.Draw()
             self._Screen.SwapAndShow()
 
         if event.key == CurKeys["Down"]:
-            self.ScrollDown()
+            # self.ScrollDown()
+            self.SpeedScroll(event.key)
+            self.ScrollDown(self._ScrollStep)
+            self._Screen.Draw()
+            self._Screen.SwapAndShow()
+        
+        if event.key == CurKeys["Right"]:   # PageDown
+            self.ScrollDown(5)
+            self._Screen.Draw()
+            self._Screen.SwapAndShow()
+
+        if event.key == CurKeys["Left"]:    # PageUp
+            self.ScrollUp(5)
             self._Screen.Draw()
             self._Screen.SwapAndShow()
 
@@ -1185,4 +1199,3 @@ def Init(main_screen):
     OBJ.Init(main_screen)
 def API(main_screen):
     OBJ.API(main_screen)
-    
