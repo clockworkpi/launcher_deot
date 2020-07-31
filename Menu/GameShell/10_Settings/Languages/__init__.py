@@ -152,30 +152,28 @@ class LanguagesPage(Page):
         self._Scroller.Init()
         self._Scroller.SetCanvasHWND(self._HWND)
 
-        
-    def ScrollDown(self):
-        if len(self._MyList) == 0:
-            return
-        self._PsIndex +=1
-        if self._PsIndex >= len(self._MyList):
-            self._PsIndex = len(self._MyList) -1
+    # def ScrollDown(self):
+        # if len(self._MyList) == 0:
+            # return
+        # self._PsIndex +=1
+        # if self._PsIndex >= len(self._MyList):
+            # self._PsIndex = len(self._MyList) -1
 
-        cur_li = self._MyList[self._PsIndex]
-        if cur_li._PosY +cur_li._Height > self._Height:
-            for i in range(0,len(self._MyList)):
-                self._MyList[i]._PosY -= self._MyList[i]._Height
+        # cur_li = self._MyList[self._PsIndex]
+        # if cur_li._PosY +cur_li._Height > self._Height:
+            # for i in range(0,len(self._MyList)):
+                # self._MyList[i]._PosY -= self._MyList[i]._Height
     
-    def ScrollUp(self):
-        if len(self._MyList) == 0:
-            return
-        self._PsIndex -= 1
-        if self._PsIndex < 0:
-            self._PsIndex = 0
-        cur_li = self._MyList[self._PsIndex]
-        if cur_li._PosY < 0:
-            for i in range(0, len(self._MyList)):
-                self._MyList[i]._PosY += self._MyList[i]._Height
-    
+    # def ScrollUp(self):
+        # if len(self._MyList) == 0:
+            # return
+        # self._PsIndex -= 1
+        # if self._PsIndex < 0:
+            # self._PsIndex = 0
+        # cur_li = self._MyList[self._PsIndex]
+        # if cur_li._PosY < 0:
+            # for i in range(0, len(self._MyList)):
+                # self._MyList[i]._PosY += self._MyList[i]._Height
 
     def Click(self):
         if len(self._MyList) == 0:
@@ -216,7 +214,8 @@ class LanguagesPage(Page):
         thelang = thelang.strip()
 
         if thelang == "":
-            thelang = "English"
+            # thelang = "English"
+            thelang = "DEOT"
 
         for i in self._MyList:
             if thelang in i._Value:
@@ -305,5 +304,3 @@ def Init(main_screen):
     OBJ.Init(main_screen)
 def API(main_screen):
     OBJ.API(main_screen)
-    
-        

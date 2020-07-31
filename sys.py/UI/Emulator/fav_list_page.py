@@ -98,7 +98,7 @@ class FavListPage(Page):
     _Emulator = None
     _Parent   = None
     _Scroller = None
-    _Scrolled = 0
+    # _Scrolled = 0
     _BGwidth  = 75
     _BGheight = 73
     _RomSoConfirmDownloadPage = None
@@ -259,52 +259,52 @@ class FavListPage(Page):
 
         self._RomSoConfirmDownloadPage = rom_so_confirm_page
         
-    def ScrollUp(self):
-        if len(self._MyList) == 0:
-            return
+    # def ScrollUp(self):
+        # if len(self._MyList) == 0:
+            # return
         
-        tmp = self._PsIndex
-        self._PsIndex -= self._ScrollStep
+        # tmp = self._PsIndex
+        # self._PsIndex -= self._ScrollStep
         
-        if self._PsIndex < 0:
-            self._PsIndex = 0
-        dy = tmp - self._PsIndex
-        cur_li = self._MyList[self._PsIndex]
-        if cur_li._PosY < 0:
-            for i in range(0, len(self._MyList)):
-                self._MyList[i]._PosY += self._MyList[i]._Height*dy
-            self._Scrolled +=dy
+        # if self._PsIndex < 0:
+            # self._PsIndex = 0
+        # dy = tmp - self._PsIndex
+        # cur_li = self._MyList[self._PsIndex]
+        # if cur_li._PosY < 0:
+            # for i in range(0, len(self._MyList)):
+                # self._MyList[i]._PosY += self._MyList[i]._Height*dy
+            # self._Scrolled +=dy
 
-    def ScrollDown(self):
-        if len(self._MyList) == 0:
-            return
-        tmp = self._PsIndex
-        self._PsIndex +=self._ScrollStep
-        if self._PsIndex >= len(self._MyList):
-            self._PsIndex = len(self._MyList) -1
+    # def ScrollDown(self):
+        # if len(self._MyList) == 0:
+            # return
+        # tmp = self._PsIndex
+        # self._PsIndex +=self._ScrollStep
+        # if self._PsIndex >= len(self._MyList):
+            # self._PsIndex = len(self._MyList) -1
         
-        dy = self._PsIndex - tmp 
-        cur_li = self._MyList[self._PsIndex]
-        if cur_li._PosY +cur_li._Height > self._Height:
-            for i in range(0,len(self._MyList)):
-                self._MyList[i]._PosY -= self._MyList[i]._Height*dy
-            self._Scrolled -= dy
+        # dy = self._PsIndex - tmp 
+        # cur_li = self._MyList[self._PsIndex]
+        # if cur_li._PosY +cur_li._Height > self._Height:
+            # for i in range(0,len(self._MyList)):
+                # self._MyList[i]._PosY -= self._MyList[i]._Height*dy
+            # self._Scrolled -= dy
     
-    def SyncScroll(self):
-        ## 
-        if self._Scrolled == 0:
-            return
+    # def SyncScroll(self):
+        # 
+        # if self._Scrolled == 0:
+            # return
 
-        if self._PsIndex < len(self._MyList):
-            cur_li = self._MyList[self._PsIndex]
-            if self._Scrolled > 0:
-                if cur_li._PosY < 0:
-                    for i in range(0, len(self._MyList)):
-                        self._MyList[i]._PosY += self._Scrolled * self._MyList[i]._Height
-            elif self._Scrolled < 0:
-                if cur_li._PosY +cur_li._Height > self._Height:
-                    for i in range(0,len(self._MyList)):
-                        self._MyList[i]._PosY += self._Scrolled * self._MyList[i]._Height
+        # if self._PsIndex < len(self._MyList):
+            # cur_li = self._MyList[self._PsIndex]
+            # if self._Scrolled > 0:
+                # if cur_li._PosY < 0:
+                    # for i in range(0, len(self._MyList)):
+                        # self._MyList[i]._PosY += self._Scrolled * self._MyList[i]._Height
+            # elif self._Scrolled < 0:
+                # if cur_li._PosY +cur_li._Height > self._Height:
+                    # for i in range(0,len(self._MyList)):
+                        # self._MyList[i]._PosY += self._Scrolled * self._MyList[i]._Height
                 
     def Click(self):
 
@@ -385,18 +385,18 @@ class FavListPage(Page):
         self._Screen.Draw()
         self._Screen.SwapAndShow()
         
-    def SpeedScroll(self, thekey):
-        if self._Screen._LastKey == thekey:
-            self._ScrollStep+=1
-            if self._ScrollStep >=5:
-                self._ScrollStep = 5
-        else:
-            self._ScrollStep = 1
+    # def SpeedScroll(self, thekey):
+        # if self._Screen._LastKey == thekey:
+            # self._ScrollStep+=1
+            # if self._ScrollStep >=5:
+                # self._ScrollStep = 5
+        # else:
+            # self._ScrollStep = 1
            
-        cur_time = time.time()
+        # cur_time = time.time()
             
-        if cur_time - self._Screen._LastKeyDown > 0.3:
-            self._ScrollStep = 1 
+        # if cur_time - self._Screen._LastKeyDown > 0.3:
+            # self._ScrollStep = 1 
     
     def KeyDown(self,event):
 
@@ -412,10 +412,7 @@ class FavListPage(Page):
 
         if event.key == CurKeys["Right"]:
             if self._Backspace:
-                move = 6
-
-                for i in range(move):
-                    self.ScrollDown()
+                self.ScrollDown(5)
 
             self._Screen.Draw()
             self._Screen.SwapAndShow()
@@ -424,23 +421,22 @@ class FavListPage(Page):
             if not self._Backspace:
                 self.ReturnToUpLevelPage()
             else:
-                move = 6
-
-                for i in range(move):
-                    self.ScrollUp()
+                self.ScrollUp(5)
 
             self._Screen.Draw()
             self._Screen.SwapAndShow()
         
         if event.key == CurKeys["Up"]:
             self.SpeedScroll(event.key)
-            self.ScrollUp()
+            # self.ScrollUp()
+            self.ScrollUp(self._ScrollStep)
             self._Screen.Draw()
             self._Screen.SwapAndShow()
 
         if event.key == CurKeys["Down"]:
             self.SpeedScroll(event.key)
-            self.ScrollDown()
+            # self.ScrollDown()
+            self.ScrollDown(self._ScrollStep)
             self._Screen.Draw()
             self._Screen.SwapAndShow()
 

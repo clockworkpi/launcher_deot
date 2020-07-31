@@ -71,7 +71,7 @@ class PlayListPage(Page):
     _BGwidth = 75
     _BGheight = 70
 
-    _Scrolled = 0
+    # _Scrolled = 0
 
     _CurSongName = ""
 
@@ -196,45 +196,45 @@ class PlayListPage(Page):
         self._Scroller.Init()
         
         
-    def ScrollUp(self):
-        if len(self._MyList) == 0:
-            return
-        self._PsIndex -= 1
-        if self._PsIndex < 0:
-            self._PsIndex = 0
-        cur_li = self._MyList[self._PsIndex]
-        if cur_li._PosY < 0:
-            for i in range(0, len(self._MyList)):
-                self._MyList[i]._PosY += self._MyList[i]._Height
-            self._Scrolled +=1
+    # def ScrollUp(self):
+        # if len(self._MyList) == 0:
+            # return
+        # self._PsIndex -= 1
+        # if self._PsIndex < 0:
+            # self._PsIndex = 0
+        # cur_li = self._MyList[self._PsIndex]
+        # if cur_li._PosY < 0:
+            # for i in range(0, len(self._MyList)):
+                # self._MyList[i]._PosY += self._MyList[i]._Height
+            # self._Scrolled +=1
 
-    def ScrollDown(self):
-        if len(self._MyList) == 0:
-            return
-        self._PsIndex +=1
-        if self._PsIndex >= len(self._MyList):
-            self._PsIndex = len(self._MyList) -1
+    # def ScrollDown(self):
+        # if len(self._MyList) == 0:
+            # return
+        # self._PsIndex +=1
+        # if self._PsIndex >= len(self._MyList):
+            # self._PsIndex = len(self._MyList) -1
 
-        cur_li = self._MyList[self._PsIndex]
-        if cur_li._PosY +cur_li._Height > self._Height:
-            for i in range(0,len(self._MyList)):
-                self._MyList[i]._PosY -= self._MyList[i]._Height
-            self._Scrolled -=1
+        # cur_li = self._MyList[self._PsIndex]
+        # if cur_li._PosY +cur_li._Height > self._Height:
+            # for i in range(0,len(self._MyList)):
+                # self._MyList[i]._PosY -= self._MyList[i]._Height
+            # self._Scrolled -=1
 
-    def SyncScroll(self):# show where it left
-        if self._Scrolled == 0:
-            return
+    # def SyncScroll(self):# show where it left
+        # if self._Scrolled == 0:
+            # return
 
-        if self._PsIndex < len(self._MyList):
-            cur_li = self._MyList[self._PsIndex]
-            if self._Scrolled > 0:
-                if cur_li._PosY < 0:
-                    for i in range(0, len(self._MyList)):
-                        self._MyList[i]._PosY += self._Scrolled * self._MyList[i]._Height
-            elif self._Scrolled < 0:
-                if cur_li._PosY +cur_li._Height > self._Height:
-                    for i in range(0,len(self._MyList)):
-                        self._MyList[i]._PosY += self._Scrolled * self._MyList[i]._Height
+        # if self._PsIndex < len(self._MyList):
+            # cur_li = self._MyList[self._PsIndex]
+            # if self._Scrolled > 0:
+                # if cur_li._PosY < 0:
+                    # for i in range(0, len(self._MyList)):
+                        # self._MyList[i]._PosY += self._Scrolled * self._MyList[i]._Height
+            # elif self._Scrolled < 0:
+                # if cur_li._PosY +cur_li._Height > self._Height:
+                    # for i in range(0,len(self._MyList)):
+                        # self._MyList[i]._PosY += self._Scrolled * self._MyList[i]._Height
             
     def Click(self):
         if len(self._MyList) == 0:
@@ -264,12 +264,16 @@ class PlayListPage(Page):
             self._Screen.SwapAndShow()
         
         if event.key == CurKeys["Up"]:
-            self.ScrollUp()
+            # self.ScrollUp()
+            self.SpeedScroll(event.key)
+            self.ScrollUp(self._ScrollStep)
             self._Screen.Draw()
             self._Screen.SwapAndShow()
 
         if event.key == CurKeys["Down"]:
-            self.ScrollDown()
+            # self.ScrollDown()
+            self.SpeedScroll(event.key)
+            self.ScrollDown(self._ScrollStep)
             self._Screen.Draw()
             self._Screen.SwapAndShow()
 
@@ -280,20 +284,14 @@ class PlayListPage(Page):
                 self._Screen.PushCurPage()
                 self._Screen.SetCurPage(myvars.MusicLibListPage)
             else:
-                move = 6
-
-                for i in range(move):
-                    self.ScrollDown()
+                self.ScrollDown(5)
 
             self._Screen.Draw()
             self._Screen.SwapAndShow()
 
         if event.key == CurKeys["Left"]:
             if self._Backspace:
-                move = 6
-
-                for i in range(move):
-                    self.ScrollUp()
+                self.ScrollUp(5)
 
             self._Screen.Draw()
             self._Screen.SwapAndShow()

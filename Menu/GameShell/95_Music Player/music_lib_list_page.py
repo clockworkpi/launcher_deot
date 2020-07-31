@@ -240,10 +240,7 @@ class MusicLibListPage(Page):
 
         if event.key == CurKeys["Right"]:
             if self._Backspace:
-                move = 6
-
-                for i in range(move):
-                    self.ScrollDown()
+                self.ScrollDown(5)
 
             self._Screen.Draw()
             self._Screen.SwapAndShow()
@@ -252,21 +249,22 @@ class MusicLibListPage(Page):
             if not self._Backspace:
                 self.ReturnToUpLevelPage()
             else:
-                move = 6
-
-                for i in range(move):
-                    self.ScrollUp()
+                self.ScrollUp(5)
 
             self._Screen.Draw()
             self._Screen.SwapAndShow()
 
         if event.key == CurKeys["Up"]:
-            self.ScrollUp()
+            # self.ScrollUp()
+            self.SpeedScroll(event.key)
+            self.ScrollUp(self._ScrollStep)
             self._Screen.Draw()
             self._Screen.SwapAndShow()
 
         if event.key == CurKeys["Down"]:
-            self.ScrollDown()
+            # self.ScrollDown()
+            self.SpeedScroll(event.key)
+            self.ScrollDown(self._ScrollStep)
             self._Screen.Draw()
             self._Screen.SwapAndShow()
 

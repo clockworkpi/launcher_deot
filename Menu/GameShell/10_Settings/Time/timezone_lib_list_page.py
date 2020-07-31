@@ -245,12 +245,14 @@ class TimezoneListPage(Page):
             self._Screen.SwapAndShow()
         
         if event.key == CurKeys["Right"]:
-            self.FScrollDown(Step=5)
+            # self.FScrollDown(Step=5)
+            self.ScrollDown(5)
             self._Screen.Draw()
             self._Screen.SwapAndShow()
             
         if event.key == CurKeys["Left"]:
-            self.FScrollUp(Step=5)
+            # self.FScrollUp(Step=5)
+            self.ScrollUp(5)
             self._Screen.Draw()
             self._Screen.SwapAndShow()
                                      
@@ -301,4 +303,4 @@ class TimezoneListPage(Page):
                     if i._PosY < 0:
                         continue
                         
-                    i.Draw()    
+                    i.Draw()
