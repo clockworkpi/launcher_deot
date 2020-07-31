@@ -8,7 +8,7 @@ import sys
 import math
 import fnmatch
 import random
-
+import time
 
 from libs import easing
 
@@ -111,6 +111,7 @@ class Page(Widget):
     _Padding = pygame.Rect(0, 0, 0, 0)  # x,y,w,h
     _Margin = pygame.Rect(0, 0, 0, 0)
     _ScrollStep = 1
+    _Scrolled = 0
     _ItemsPerPage = 6
 
     def __init__(self):
@@ -582,82 +583,165 @@ class Page(Widget):
             self._Icons[i].Draw()
 
     # make sure the Class has the _MyList
-    def ScrollDown(self):
+    # def ScrollDown(self):
         # if len(self._MyList) == 0:
-        if len(self._MyList) <= 1:
-            return
-        self._PsIndex +=1
-        if self._PsIndex >= len(self._MyList):
+            # return
+        # self._PsIndex +=1
+        # if self._PsIndex >= len(self._MyList):
             # self._PsIndex = len(self._MyList) -1
 
-            # loop scroll, to first
-            if len(self._MyList) > self._ItemsPerPage:
-                self.FScrollUp(len(self._MyList) - self._ItemsPerPage)
-            self._PsIndex = 0
-            return
-
-        cur_li = self._MyList[self._PsIndex]
-        if cur_li._PosY +cur_li._Height > self._Height:
-            for i in range(0,len(self._MyList)):
-                self._MyList[i]._PosY -= self._MyList[i]._Height
+        # cur_li = self._MyList[self._PsIndex]
+        # if cur_li._PosY +cur_li._Height > self._Height:
+            # for i in range(0,len(self._MyList)):
+                # self._MyList[i]._PosY -= self._MyList[i]._Height
     
-    def ScrollUp(self):
+    # def ScrollUp(self):
         # if len(self._MyList) == 0:
+            # return
+        # self._PsIndex -= 1
+        # if self._PsIndex < 0:
+            # self._PsIndex = 0
+        # cur_li = self._MyList[self._PsIndex]
+        # if cur_li._PosY < 0:
+            # for i in range(0, len(self._MyList)):
+                # self._MyList[i]._PosY += self._MyList[i]._Height
+    
+    def ScrollUp(self, step = 1):
         if len(self._MyList) <= 1:
             return
-        self._PsIndex -= 1
-        if self._PsIndex < 0:
-            # self._PsIndex = 0
+
+        # check step
+        if step > self._ItemsPerPage:
+            step = self._ItemsPerPage - 1
+        if step > len(self._MyList) - 1:
+            step = 1
+
+        # first to end
+        if self._PsIndex - step < 0 and step == 1:
+            # index of the last item on current screen 
+            self._PsIndex = 0 + self._ItemsPerPage - 1
 
             # loop scroll, to end
             if len(self._MyList) > self._ItemsPerPage:
-                self.FScrollDown(len(self._MyList) - self._ItemsPerPage)
+                self.FScrollDown(len(self._MyList) - self._ItemsPerPage, True)
             self._PsIndex = len(self._MyList) - 1
+            self._Scrolled = self._PsIndex
+            return
+        else:
+            self.FScrollUp(step)
+
+    def ScrollDown(self, step = 1):
+        if len(self._MyList) <= 1:
             return
 
-        cur_li = self._MyList[self._PsIndex]
-        if cur_li._PosY < 0:
-            for i in range(0, len(self._MyList)):
-                self._MyList[i]._PosY += self._MyList[i]._Height
+        # check step
+        if step > self._ItemsPerPage:
+            step = self._ItemsPerPage - 1
+        if step > len(self._MyList) - 1:
+            step = 1
 
-    def FScrollUp(self,Step=1):
+        # end to first
+        if self._PsIndex + step >= len(self._MyList) and step == 1:
+            # index of the first item on current screen
+            self._PsIndex = (len(self._MyList) - 1) - (self._ItemsPerPage - 1)
+
+            # loop scroll, to first
+            if len(self._MyList) > self._ItemsPerPage:
+                self.FScrollUp(len(self._MyList) - self._ItemsPerPage, True)
+            self._PsIndex = 0
+            self._Scrolled = self._PsIndex
+            return
+        else:
+            self.FScrollDown(step)
+
+    # do not directly call this function, please use "ScrollUp(step)"
+    def FScrollUp(self, step = 1, loop_scroll = False):
         # if len(self._MyList) == 0:
         if len(self._MyList) <= 1:
             return
+
+        if step < self._ItemsPerPage and not loop_scroll:
+            if (self._PsIndex - step + 1) - 1 < step:
+                step = 1
+
         tmp = self._PsIndex
-        self._PsIndex -= Step
+        self._PsIndex -= step
         
         if self._PsIndex < 0:
             self._PsIndex = 0
-        dy = tmp-self._PsIndex 
+
+        # dy = tmp-self._PsIndex
+        dy = abs(tmp - self._PsIndex)
         cur_li = self._MyList[self._PsIndex]
         if cur_li._PosY < 0:
             for i in range(0, len(self._MyList)):
-                self._MyList[i]._PosY += self._MyList[i]._Height*dy
+                self._MyList[i]._PosY += self._MyList[i]._Height * dy
+            self._Scrolled += dy
+
+    # do not directly call this function, please use "ScrollDown(step)"
+    def FScrollDown(self, step = 1, loop_scroll = False):
+        # if len(self._MyList) == 0:
+        if len(self._MyList) <= 1:
+            return
         
+        if step < self._ItemsPerPage and not loop_scroll:
+            if len(self._MyList) - (self._PsIndex + step + 1) < step:
+                step = 1
+
+        tmp = self._PsIndex
+        self._PsIndex += step
+
+        if self._PsIndex >= len(self._MyList):
+            self._PsIndex = len(self._MyList) - 1
+
+        # dy = self._PsIndex - tmp
+        dy = abs(self._PsIndex - tmp)
+        cur_li = self._MyList[self._PsIndex]
+        if cur_li._PosY + cur_li._Height > self._Height:
+            for i in range(0, len(self._MyList)):
+                self._MyList[i]._PosY -= self._MyList[i]._Height * dy
+            self._Scrolled -= dy
+
+    def SyncScroll(self):
+        if self._Scrolled == 0:
+            return
+
+        if self._PsIndex < len(self._MyList):
+            cur_li = self._MyList[self._PsIndex]
+            if self._Scrolled > 0:
+                if cur_li._PosY < 0:
+                    for i in range(0, len(self._MyList)):
+                        self._MyList[i]._PosY += self._Scrolled * self._MyList[i]._Height
+            elif self._Scrolled < 0:
+                if cur_li._PosY +cur_li._Height > self._Height:
+                    for i in range(0,len(self._MyList)):
+                        self._MyList[i]._PosY += self._Scrolled * self._MyList[i]._Height
+
+    def SpeedScroll(self, thekey):
+        if self._Screen._LastKey == thekey:
+            self._ScrollStep += 1
+            if self._ScrollStep >= self._ItemsPerPage:
+                self._ScrollStep = self._ItemsPerPage - 1
+        else:
+            self._ScrollStep = 1
+           
+        cur_time = time.time()
+            
+        if cur_time - self._Screen._LastKeyDown > 0.3:
+            self._ScrollStep = 1
+
+        if len(self._MyList) < self._ItemsPerPage:
+            self._ScrollStep = 1
+
     def RefreshPsIndex(self):
         if len(self._MyList) == 0:
             self._PsIndex = 0
         if self._PsIndex > (len(self._MyList) -1):
             self._PsIndex = len(self._MyList) -1
-        
-    def FScrollDown(self,Step=1):
-        # if len(self._MyList) == 0:
-        if len(self._MyList) <= 1:
-            return
-        tmp = self._PsIndex
-        self._PsIndex +=Step
-        if self._PsIndex >= len(self._MyList):
-            self._PsIndex = len(self._MyList) -1
-        dy = self._PsIndex - tmp
-        cur_li = self._MyList[self._PsIndex]
-        if cur_li._PosY +cur_li._Height > self._Height:
-            for i in range(0,len(self._MyList)):
-                self._MyList[i]._PosY -= self._MyList[i]._Height*dy
     
-    # def KeyDown(self,event):##default keydown,every inherited page class should have it's own KeyDown
+    # def KeyDown(self,event):##default keydown, every inherited page class should have it's own KeyDown
     # fast: fast display mode
-    def KeyDown(self, event, fast = False):##default keydown,every inherited page class should have it's own KeyDown
+    def KeyDown(self, event, fast = False):##default keydown, every inherited page class should have it's own KeyDown
 
         if IsKeyMenuOrB(event.key):
             self.ReturnToUpLevelPage()
