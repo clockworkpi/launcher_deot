@@ -107,7 +107,7 @@ class RomListPage(Page):
 
     _Scroller = None
     
-    _Scrolled = 0
+    # _Scrolled = 0
 
     _BGwidth = 56
     _BGheight = 70
@@ -115,8 +115,6 @@ class RomListPage(Page):
     _RomSoConfirmDownloadPage = None
 
     _Backspace = False
-    
-    _ItemsPerPage = 6
 
     def __init__(self):
         Page.__init__(self)
@@ -295,81 +293,52 @@ class RomListPage(Page):
 
         self._RomSoConfirmDownloadPage = rom_so_confirm_page
         
-    def ScrollUp(self):
+    # def ScrollUp(self):
         # if len(self._MyList) == 0:
-        if len(self._MyList) <= 1:
-            return
+            # return
         
-        tmp = self._PsIndex
-        self._PsIndex -= self._ScrollStep
+        # tmp = self._PsIndex
+        # self._PsIndex -= self._ScrollStep
         
-        if self._PsIndex < 0:
+        # if self._PsIndex < 0:
             # self._PsIndex = 0
-            self._PsIndex = len(self._MyList) - 1   # to end
-            
         # dy = tmp - self._PsIndex
-        dy = abs(tmp - self._PsIndex)
-        cur_li = self._MyList[self._PsIndex]
-        if cur_li._PosY < 0:
-            for i in range(0, len(self._MyList)):
-                self._MyList[i]._PosY += self._MyList[i]._Height * dy
-            self._Scrolled += dy
+        # cur_li = self._MyList[self._PsIndex]
+        # if cur_li._PosY < 0:
+            # for i in range(0, len(self._MyList)):
+                # self._MyList[i]._PosY += self._MyList[i]._Height*dy
+            # self._Scrolled +=dy
 
-        # loop scroll, to end
-        if self._PsIndex == len(self._MyList) - 1:
-            # check items per page
-            if len(self._MyList) > self._ItemsPerPage:
-                self._ItemsPerPage -= 1                 # not include current item
-                for i in range(0, len(self._MyList)):
-                    self._MyList[i]._PosY -= self._MyList[i]._Height * (dy - self._ItemsPerPage)
-            self._Scrolled -= dy
-            self._ItemsPerPage = 6                      # reset to 6
-
-    def ScrollDown(self):
+    # def ScrollDown(self):
         # if len(self._MyList) == 0:
-        if len(self._MyList) <= 1:
-            return
-
-        tmp = self._PsIndex
-        self._PsIndex +=self._ScrollStep
-
-        if self._PsIndex >= len(self._MyList):
+            # return
+        # tmp = self._PsIndex
+        # self._PsIndex +=self._ScrollStep
+        # if self._PsIndex >= len(self._MyList):
             # self._PsIndex = len(self._MyList) -1
-            self._PsIndex = 0   # to first
         
-        # dy = self._PsIndex - tmp
-        dy = abs(self._PsIndex - tmp)
-        cur_li = self._MyList[self._PsIndex]
-        if cur_li._PosY + cur_li._Height > self._Height:
-            for i in range(0,len(self._MyList)):
-                self._MyList[i]._PosY -= self._MyList[i]._Height * dy
-            self._Scrolled -= dy
+        # dy = self._PsIndex - tmp 
+        # cur_li = self._MyList[self._PsIndex]
+        # if cur_li._PosY +cur_li._Height > self._Height:
+            # for i in range(0,len(self._MyList)):
+                # self._MyList[i]._PosY -= self._MyList[i]._Height*dy
+            # self._Scrolled -= dy
+            
+    # def SyncScroll(self):
+        # 
+        # if self._Scrolled == 0:
+            # return
 
-        # loop scroll, to first
-        if self._PsIndex == 0:
-            # check items per page
-            if len(self._MyList) > self._ItemsPerPage:
-                self._ItemsPerPage -= 1                 # not include current item
-                for i in range(0, len(self._MyList)):
-                    self._MyList[i]._PosY += self._MyList[i]._Height * (dy - self._ItemsPerPage)
-            self._Scrolled += dy
-            self._ItemsPerPage = 6                      # reset to 6
-
-    def SyncScroll(self):
-        ## 
-        if self._Scrolled == 0:
-            return
-
-        if self._PsIndex < len(self._MyList):
-            cur_li = self._MyList[self._PsIndex]
-            if self._Scrolled > 0:
-                if cur_li._PosY < 0:
-                    for i in range(0, len(self._MyList)):
-                        self._MyList[i]._PosY += self._Scrolled * self._MyList[i]._Height
-            elif self._Scrolled < 0:
-                if cur_li._PosY +cur_li._Height > self._Height:
-                    for i in range(0,len(self._MyList)):
-                        self._MyList[i]._PosY += self._Scrolled * self._MyList[i]._Height
+        # if self._PsIndex < len(self._MyList):
+            # cur_li = self._MyList[self._PsIndex]
+            # if self._Scrolled > 0:
+                # if cur_li._PosY < 0:
+                    # for i in range(0, len(self._MyList)):
+                        # self._MyList[i]._PosY += self._Scrolled * self._MyList[i]._Height
+            # elif self._Scrolled < 0:
+                # if cur_li._PosY +cur_li._Height > self._Height:
+                    # for i in range(0,len(self._MyList)):
+                        # self._MyList[i]._PosY += self._Scrolled * self._MyList[i]._Height
                 
     def Click(self):
         if len(self._MyList) == 0:
@@ -452,21 +421,18 @@ class RomListPage(Page):
         self._Screen.Draw()
         self._Screen.SwapAndShow()
 
-    def SpeedScroll(self, thekey):
-        if self._Screen._LastKey == thekey:
-            self._ScrollStep+=1
-            if self._ScrollStep >=5:
-                self._ScrollStep = 5
-        else:
-            self._ScrollStep = 1
+    # def SpeedScroll(self, thekey):
+        # if self._Screen._LastKey == thekey:
+            # self._ScrollStep+=1
+            # if self._ScrollStep >=5:
+                # self._ScrollStep = 5
+        # else:
+            # self._ScrollStep = 1
            
-        cur_time = time.time()
+        # cur_time = time.time()
             
-        if cur_time - self._Screen._LastKeyDown > 0.3:
-            self._ScrollStep = 1
-
-        if len(self._MyList) < self._ItemsPerPage:
-            self._ScrollStep = 1
+        # if cur_time - self._Screen._LastKeyDown > 0.3:
+            # self._ScrollStep = 1 
 
     def KeyDown(self,event):
 
@@ -482,33 +448,29 @@ class RomListPage(Page):
                 self._Screen.PushCurPage()
                 self._Screen.SetCurPage(self._Parent.FavListPage)
             else:
-                move = 6
-
-                for i in range(move):
-                    self.ScrollDown()
+                self.ScrollDown(5)
 
             self._Screen.Draw()
             self._Screen.SwapAndShow()
 
         if event.key == CurKeys["Left"]:
             if self._Backspace:
-                move = 6
-
-                for i in range(move):
-                    self.ScrollUp()
+                self.ScrollUp(5)
 
             self._Screen.Draw()
             self._Screen.SwapAndShow()
 
         if event.key == CurKeys["Up"]:
             self.SpeedScroll(event.key)
-            self.ScrollUp()
+            # self.ScrollUp()
+            self.ScrollUp(self._ScrollStep)
             self._Screen.Draw()
             self._Screen.SwapAndShow()
 
         if event.key == CurKeys["Down"]:
             self.SpeedScroll(event.key)
-            self.ScrollDown()
+            # self.ScrollDown()
+            self.ScrollDown(self._ScrollStep)
             self._Screen.Draw()
             self._Screen.SwapAndShow()
 
