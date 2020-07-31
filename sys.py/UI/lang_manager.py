@@ -16,7 +16,8 @@ class LangManager(object):
     
     _Langs = {}
     _Config = None
-    _ConfigFileName = "00_English.ini" ## double % to escape 
+    # _ConfigFileName = "00_English.ini" ## double % to escape 
+    _ConfigFileName = "99_DEOT_English.ini"
     _CJKMode = False
     
     def __init__(self):
@@ -113,6 +114,5 @@ def InitMyLangManager():
     global MyLangManager
     if MyLangManager == None:
         MyLangManager = LangManager()
-    
 
 InitMyLangManager()
