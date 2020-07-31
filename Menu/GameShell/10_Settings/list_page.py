@@ -134,20 +134,12 @@ class ListPage(Page):
             self.Click()
 
         if event.key == CurKeys["Left"]:    # PageUp
-            move = 3
-            
-            for i in range(move):
-                self.ScrollUp()
-
+            self.ScrollUp(3)
             self._Screen.Draw()
             self._Screen.SwapAndShow()
 
         if event.key == CurKeys["Right"]:   # PageDown
-            move = 3
-            
-            for i in range(move):
-                self.ScrollDown()
-
+            self.ScrollDown(3)
             self._Screen.Draw()
             self._Screen.SwapAndShow() 
 
