@@ -239,7 +239,7 @@ class FavListPage(Page):
         bgpng._ImgSurf = MyIconPool.GiveIconSurface("star")
         bgpng._MyType = ICON_TYPES["STAT"]
         bgpng._Parent = self
-        bgpng.AddLabel(MyLangManager.Tr("MyFavGames"), MyLangManager.TrFont("varela18"))
+        bgpng.AddLabel(MyLangManager.Tr("MyFavGames"), MyLangManager.TrFont("Eurostile18"))
         bgpng.SetLableColor(MySkinManager.GiveColor('Disabled'))
         bgpng.Adjust(0,0,self._BGwidth,self._BGheight,0)
 
