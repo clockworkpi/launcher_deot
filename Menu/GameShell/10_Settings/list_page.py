@@ -27,7 +27,7 @@ class ListPage(Page):
     
     _FootMsg = ["Nav","","","Back","Enter"]
     _MyList = []
-    _ListFontObj = MyLangManager.TrFont("varela15")
+    _ListFontObj = MyLangManager.TrFont("Eurostile15")
 
     _Scroller = None
     
