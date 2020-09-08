@@ -21,7 +21,7 @@ from UI.lang_manager import MyLangManager
 import config
 
 class RomSoConfirmPage(ConfirmPage):
-    _ListFont = MyLangManager.TrFont("veramono18")
+    _ListFont = MyLangManager.TrFont("Eurostile15")
 
     _ConfirmText = MyLangManager.Tr("SetupGameEngineAutoQ")
 
