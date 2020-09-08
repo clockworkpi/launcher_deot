@@ -62,7 +62,7 @@ class ListItem(object):
     
     def Init(self,text):
 
-        #self._Fonts["normal"] = fonts["veramono12"]
+        #self._Fonts["normal"] = fonts["Eurostile12"]
         
         l = Label()
         l._PosX = 20
