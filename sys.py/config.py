@@ -17,7 +17,7 @@ MPD_socket = "/tmp/mpd.socket"
 #UPDATE_URL="https://raw.githubusercontent.com/clockworkpi/CPI_DEOT/master/version.json"
 UPDATE_URL="https://raw.githubusercontent.com/hi80482/launcher_deot/master/version.json"
 
-VERSION="D.E.O.T. v2+ 200626"
+VERSION="D.E.O.T. v2+ 200903"
 
 SKIN=None
 
