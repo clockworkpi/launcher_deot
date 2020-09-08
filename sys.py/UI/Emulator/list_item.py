@@ -113,5 +113,3 @@ class ListItem(object):
             self._Parent._Icons["sys"].Draw()
         
         pygame.draw.line(self._Parent._CanvasHWND,MySkinManager.GiveColor('Line'),(self._PosX,self._PosY+self._Height-1),(self._PosX+self._Width,self._PosY+self._Height-1),1)
-    
-
