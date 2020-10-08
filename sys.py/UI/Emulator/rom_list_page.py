@@ -273,7 +273,7 @@ class RomListPage(Page):
         bgpng._ImgSurf = MyIconPool.GiveIconSurface("empty")
         bgpng._MyType = ICON_TYPES["STAT"]
         bgpng._Parent = self
-        bgpng.AddLabel(MyLangManager.Tr("Please upload data over Wi-Fi"), MyLangManager.TrFont("varela22"))
+        bgpng.AddLabel(MyLangManager.Tr("Please upload data over Wi-Fi"), MyLangManager.TrFont("Eurostile22"))
         bgpng.SetLableColor(MySkinManager.GiveColor('Disabled'))
         bgpng.Adjust(0,0,self._BGwidth,self._BGheight,0)
 

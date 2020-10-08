@@ -1,6 +1,6 @@
 #!/bin/bash
 
-cd /home/cpi/launcher || exit 
+cd /home/cpi/launcher || exit
 feh --bg-center /home/cpi/launcher/sys.py/gameshell/wallpaper/updating.png
 git pull
 git reset --hard "$1"

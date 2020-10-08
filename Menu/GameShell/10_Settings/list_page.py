@@ -27,7 +27,7 @@ class ListPage(Page):
     
     _FootMsg = ["Nav","","","Back","Enter"]
     _MyList = []
-    _ListFontObj = MyLangManager.TrFont("varela15")
+    _ListFontObj = MyLangManager.TrFont("Eurostile15")
 
     _Scroller = None
     
@@ -55,7 +55,7 @@ class ListPage(Page):
                          ["","PowerOptions","Power Options"],
                          ["","Wifi","Wi-Fi"],
                          ["","Bluetooth","Bluetooth"],
-                         ["","Sound","Sound  Volume"],
+                         ["","Sound","Sound Volume"],
                          ["","Brightness","BackLight Brightness"],
                          ["","Storage",""],
                          ["","Time","Timezone"],

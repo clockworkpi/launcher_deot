@@ -62,7 +62,7 @@ class ListItem(object):
     
     def Init(self,text):
 
-        #self._Fonts["normal"] = fonts["veramono12"]
+        #self._Fonts["normal"] = fonts["Eurostile12"]
         
         l = Label()
         l._PosX = 20
@@ -113,5 +113,3 @@ class ListItem(object):
             self._Parent._Icons["sys"].Draw()
         
         pygame.draw.line(self._Parent._CanvasHWND,MySkinManager.GiveColor('Line'),(self._PosX,self._PosY+self._Height-1),(self._PosX+self._Width,self._PosY+self._Height-1),1)
-    
-
