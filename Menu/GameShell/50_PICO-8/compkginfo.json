@@ -14,6 +14,9 @@
         "pico-8_0.2.0e_raspi.zip": "085edfecd111c2b195b878b2197afe7a",
         "pico-8_0.2.0i_raspi.zip": "be0c708d707fa967c77455512bd456c7",
         "pico-8_0.2.1b_raspi.zip": "d72968c56b4de8bc3dda84a6d5b6270e",
+        "pico-8_0.2.2b_raspi.zip": "1f93d6bf7932961c04f531f4c29e9595",
+        "pico-8_0.2.2c_raspi.zip": "7152a9c0746b2f7eb3fa74981fb8ac8d",
+        "pico-8_0.2.3_raspi.zip": "90f2dfc6414f9a9186f40146c29f4d40",
         "pico-8.zip": "whatever it takes"
     },
     "Post-Up": "bash Post-Up.sh"
